@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'antd';
-import { images } from '../../config/images'
+import Login from '../../components/Login/Login'
 
   import './Loginpage.scss'
 
@@ -11,17 +10,9 @@ class Loginpage extends Component {
   render() {
     return (
       
-        <div className="LoginpageStyles">
-          <img src={images.logoMain} alt="" />
-          <Button type="primary">Primary Button</Button>
-          as dasd asd
-          asd
-          asd
-          asd
-          as
-          da
-        </div>
-      
+      <div className="LoginpageStyles">
+        <Login></Login>
+      </div>
     )
   }
 }
