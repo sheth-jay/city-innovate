@@ -6,6 +6,11 @@ export const routes = {
     component: lazy(() => import('../pages/Loginpage/Loginpage')),
     exact: true
   },
+  signuppage: {
+    path: '/signup',
+    component: lazy(() => import('../pages/Signuppage/Signuppage')),
+    exact: true
+  },
 }
 
 export const renderRoutes = Object.entries(routes)

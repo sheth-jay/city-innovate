@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-
 import 'antd/dist/antd.css';
-import './Signup.scss'
+import { Link } from 'react-router-dom';
 
+import './Signup.scss'
 
 const Signup = () => {
   const onFinish = values => {
@@ -87,7 +87,7 @@ const Signup = () => {
           Register Now
         </Button>
         <span className="center-text or-text">Or</span> 
-        <p className="center-text">Already have account? <a href="/login">Login</a></p>
+        <p className="center-text">Already have account? <Link to="/">Login</Link></p>
       </Form.Item>
     </Form>
   )

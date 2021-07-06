@@ -1,10 +1,12 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './Login.scss'
+import * as actions from './redux/actions';
 
-
-const Login = () => {
+const Login = ({ login }) => {
   const onFinish = values => {
     console.log('Received values of form: ', values);
   };
@@ -59,10 +61,14 @@ const Login = () => {
           Login
         </Button>
         <span className="center-text or-text">Or</span> 
-        <p className="center-text">Don't have account? <a href="/signup">Signup</a></p>
+        <p className="center-text">Don't have account? <Link to="/signup">Signup</Link></p>
       </Form.Item>
     </Form>
   )
 }
 
-export default Login
+const mapDispatchToProps = dispatch => ({
+  login: (email, password) => dispatch(actions.login(email, password))
+});
+
+export default connect(null, mapDispatchToProps)(Login)

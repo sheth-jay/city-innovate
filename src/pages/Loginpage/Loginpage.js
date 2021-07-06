@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
+
+import './Loginpage.scss'
 import Login from '../../components/Login/Login'
 
-  import './Loginpage.scss'
-
-
-class Loginpage extends Component {
-  state = {}
-
-  render() {
-    return (
-      
-      <div className="LoginpageStyles">
-        <Login></Login>
-      </div>
-    )
-  }
+const Loginpage = () => {
+  return (
+    <div className="LoginpageStyles">
+      <Login></Login>
+    </div>
+  )
 }
 
 export default Loginpage
