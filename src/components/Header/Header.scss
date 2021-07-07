@@ -1,0 +1,103 @@
+@import './../../layout/variables.scss';
+
+.HeaderStyles {
+  padding: 15px 0;
+  background: $white;
+  border-bottom: 1px solid $gracolor;
+  .TopHeader {
+    padding-bottom: 14px;
+  }
+  .HeaderTitle {
+    text-align: center;
+    h3 {
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 600;
+      color: $black1;
+      margin: 0;
+    }
+  }
+  .HeaderRight {
+    text-align: right;
+    .UserBorder {
+      border-left: 1px solid $gracolor;
+      padding-left: 18px;
+    }
+  }
+  .ant-btn-link {
+    padding: 0;
+    height: auto;
+  }
+  .BottomHeader {
+    padding: 12px 0 0;
+  }
+
+  .SearchBx {
+    width: 267px;
+    .ant-input-affix-wrapper {
+      background: $gracolor2;
+      border-radius: 4px;
+      border: none;
+      padding: 6px 13px 6px;
+      .ant-input {
+        background: $gracolor2;
+        color: $gracolor3;
+        font-size: 14px;
+        &::placeholder {
+          color: $gracolor3;
+        }
+      }
+    }
+  }
+  .DropDownMenu {
+    .ant-dropdown-link {
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: 400;
+      color: $black1;
+      border: 1px solid $gracolor;
+      padding: 8px 14px 8px 14px;
+      margin-right: 8px;
+      border-radius: 40px;
+      @media #{$PhoneL} {
+        margin-bottom: 10px;
+        padding: 8px 10px 8px 10px;
+      }
+      svg {
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+    }
+    .ClearAll {
+      margin-left: 14px;
+    }
+  }
+  .ButtonRight {
+    text-align: right;
+    .ant-btn-primary {
+      font-size: 13px;
+      svg {
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+    }
+  }
+  @media #{$Laptop} {
+    .Search-drop-row {
+      .ant-col {
+        width: 100%;
+      }
+    }
+    .SearchBx {
+      width: 100%;
+    }
+    .ButtonRight {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .DropDownMenu {
+      margin-top: 15px;
+      text-align: center;
+    }
+  }
+}

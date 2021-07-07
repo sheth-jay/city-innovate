@@ -1,8 +1,13 @@
 import {lazy} from 'react'
 
 export const routes = {
-  loginpage: {
+  taskmanagement: {
     path: '/',
+    component: lazy(() => import('../pages/Taskmanagement/Taskmanagement')),
+    exact: true
+  },
+  loginpage: {
+    path: '/login',
     component: lazy(() => import('../pages/Loginpage/Loginpage')),
     exact: true
   },

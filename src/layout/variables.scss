@@ -1,3 +1,5 @@
+$primary: #0064FF;
+
 $white: #fff;
 
 $gracolor: #EBEBF0;
@@ -8,3 +10,18 @@ $gracolor5: #636C72;
 
 $black: #000;
 $black1: #173851;
+
+$green: #16B255;
+$red: #FF6A73;
+
+
+/* Media screen */
+$DesktopXL: 'only screen and (max-width : 1919px)';
+$DesktopL: 'only screen and (max-width : 1660px)';
+$DesktopM: 'only screen and (max-width : 1440px)';
+$Desktop: 'only screen and (max-width : 1366px)';
+$Laptop: 'only screen and (max-width : 1199px)';
+$Ipad: 'only screen and (max-width : 1024px)';
+$IpadS: 'only screen and (max-width: 991px)';
+$PhoneL: 'only screen and (max-width: 767px)';
+$PhoneS: 'only screen and (max-width: 575px)';

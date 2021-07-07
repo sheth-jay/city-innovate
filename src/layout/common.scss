@@ -10,7 +10,95 @@
 }
 .ContentArea {
     padding: 20px;
+    @media #{$PhoneL} {
+        padding: 20px 0;
+    }
 }
 .ant-input {
     border-radius: 4px;
+}
+.DropCategory {
+    border-radius: 11px;
+}
+.DropDownBx {
+    width: 271px;
+    padding: 15px;
+    .ant-input {
+        border: 1px solid $gracolor;        
+    }
+    .ant-checkbox {
+        & + span {
+            width: 100%;
+            padding-right: 25px;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            position: relative;
+            span {
+                color: $gracolor3;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+    .ant-checkbox-wrapper {
+        width: 100%;
+        margin: 0;
+        padding: 8px 12px;
+        border-radius: 4px;
+        &-checked {
+            background: rgba($color: $primary, $alpha: 0.1);
+            .ant-checkbox {
+                & + span {
+                    span {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+    .Assigned-group {
+        display: flex;
+        align-items: center;
+        &-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+        &-detail {
+            padding-left: 10px;
+            h4 {
+                font-size: 13px;
+                font-weight: 500;
+                margin: 0;
+            }
+            p {
+                color: $gracolor5;
+                font-size: 12px;
+                margin: 0;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+            }
+        }
+    }
+}
+.DropDwonBx-footer {
+    border-top: 1px solid $gracolor;
+    padding: 10px 12px;
+    .ant-btn-primary {
+        margin-right: 10px;
+    }
 }

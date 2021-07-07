@@ -1,0 +1,151 @@
+@import './../../layout/variables.scss';
+
+.TaskmanagementtableStyles {
+  .ant-table-content {
+    overflow: auto;
+  }
+  .ant-table-thead {
+    th {
+      background: $gracolor4;
+      font-weight: 400;
+      font-size: 14px;
+      border: none;
+      color: $gracolor5;
+      &:before {
+        display: none;
+      }
+      &:hover {
+        background: $gracolor4;
+      }
+      .ant-table-column-sorters {
+        justify-content: flex-start;
+        .ant-table-column-title {
+          flex: none;
+          margin-right: 6px;
+        }
+        .ant-table-column-sorter-up, .ant-table-column-sorter-down {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+  .ant-table-tbody {
+    background: $white;
+    border: 1px solid $gracolor;
+    border-radius: 11px;
+    box-shadow: 0px 5px 10px 0px rgba($color: $black, $alpha: 0.1);
+    tr {
+      td {
+        border: none;
+        padding: 14px 13px;
+        &.ant-table-column-sort {
+          background: $white;
+        }
+        .ant-tag {
+          font-size: 13px;
+          background: rgba($color: $primary, $alpha: 0.1);
+          color: $primary;
+          padding: 4px 8px;
+          border-radius: 20px;
+          border: none;
+        }
+        .TagLabels {
+          width: 120px;
+          .ant-tag {
+            background: $gracolor2;
+            color: $gracolor5;
+          }
+        }
+        .TaskName {
+          padding-right: 90px;
+          position: relative;
+          width: 400px;
+          p {
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            font-size: 16px;
+            margin: 0;
+            .tag {
+              font-size: 10px;
+              background: $primary;
+              color: $white;
+              padding: 2px 5px;
+              border-radius: 12px;
+              font-weight: 600;
+            }
+          }
+          .ant-btn-link {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $gracolor5;
+            font-size: 12px;
+            padding: 0;
+            height: auto;
+            display: none;
+            svg {
+              vertical-align: middle;
+              margin-left: 7px;
+            }
+          }
+        }
+        .Assigned {
+          width: 150px;
+          .ant-avatar {
+            margin-right: 4px;
+          }
+        }
+        .date {
+          font-size: 15px;
+          &.green {
+            color: $green;
+          }
+          &.grey {
+            color: $gracolor5;
+          }
+          &.red {
+            color: $red;
+          }
+        }
+      }
+      &:hover {
+        td {
+          background: $gracolor2;
+        }
+      }
+      &.ant-table-row {
+        &:hover {
+          .TaskName {
+            .ant-btn-link {
+              display: block;
+            }
+          }
+        }
+      }
+      &:first-child {
+        td {
+          &:first-child {
+            border-radius: 0 0 0 11px;
+          }
+          &:last-child {
+            border-radius: 0 0 11px 0;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:first-child {
+            border-radius: 0 0 0 11px;
+          }
+          &:last-child {
+            border-radius: 0 0 11px 0;
+          }
+        }
+      }
+    }
+  }
+}

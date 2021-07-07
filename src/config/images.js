@@ -1,4 +1,4 @@
 export const images = {
-  logoMain: require('./../assets/images/Large-Scale.png')
+  logo: require('./../assets/images/logo.svg'),
+  user1: require('./../assets/images/usericon1.svg')
 }
-  
