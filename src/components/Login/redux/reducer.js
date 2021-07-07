@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
         loginError: null,
       };
     case actionTypes.LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.data.access_token);
+      localStorage.setItem('token', action.payload.data.token);
       return {
         ...state,
         loginRequestState: RequestStates.success,

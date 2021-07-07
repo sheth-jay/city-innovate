@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 import './Login.scss'
@@ -8,7 +9,9 @@ import * as actions from './redux/actions';
 
 const Login = ({ login }) => {
   const onFinish = values => {
-    console.log('Received values of form: ', values);
+    login(values.emailAddress, values.password)
+      .then(() => console.log('you have logged in successfully'))
+      .catch((err) => console.log(err));
   };
   
   return (
@@ -22,22 +25,22 @@ const Login = ({ login }) => {
     >
       <h1>Login</h1>
       <Form.Item
-        name="username"
+        name="emailAddress"
         rules={[
           {
             required: true,
-            message: 'Please input your Username',
+            message: 'Please enter your Email Address',
           },
         ]}
       >
-        <Input placeholder="Username" />
+        <Input placeholder="Email Address" />
       </Form.Item>
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: 'Please input your Password',
+            message: 'Please enter your Password',
           },
         ]}
       >
@@ -51,9 +54,9 @@ const Login = ({ login }) => {
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <a className="login-form-forgot" href="/forgot-password">
+        <Link className="login-form-forgot" to="/forgot-password">
           Forgot password
-        </a>
+        </Link>
       </Form.Item>
 
       <Form.Item>
@@ -68,7 +71,7 @@ const Login = ({ login }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  login: (email, password) => dispatch(actions.login(email, password))
+  login: (emailAddress, password) => dispatch(actions.login(emailAddress, password))
 });
 
 export default connect(null, mapDispatchToProps)(Login)
