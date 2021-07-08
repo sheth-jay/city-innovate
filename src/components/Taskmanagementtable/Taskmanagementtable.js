@@ -9,7 +9,7 @@ import OverviewIcon from '../icons/OverviewIcon';
 import ActivityIcon from '../icons/ActivityIcon';
 import CalenderIcon from '../icons/CalenderIcon';
 import AddIcon from '../icons/AddIcon';
-import { formattedDateAndClassGetter } from '../../utils';
+import { getFormattedDateAndClass } from '../../utils';
 
 import OverviewTab from './../OverviewTab/OverviewTab';
 import ActivityTab from './../ActivityTab/ActivityTab';
@@ -49,12 +49,12 @@ const columns = [
 
 const data = (taskList, showDrawer) => {
 	return taskList && taskList.map(task => {
-		const { dueDateClass, dueDate } = formattedDateAndClassGetter(task.dueDate);
+		const { dueDateClass, dueDate } = getFormattedDateAndClass(task.due_date);
 		return ({
 			key: task.id,
 			taskname: (
 				<div className="TaskName">
-					<p>{task.name} <span className="tag">NEW</span></p>
+					<p>{task.title} <span className="tag">NEW</span></p>
 					<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
 				</div>
 			),

@@ -8,6 +8,8 @@ const INITIAL_STATE = {
   getTaskListRequestState: RequestStates.init,
   getTaskListSource: null,
   getTaskListError: null,
+  taskList: [],
+  taskListMetadata: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -66,7 +68,6 @@ export default (state = INITIAL_STATE, action) => {
             ...action.payload.filterItems,
           };
         }
-        console.log('>>>filterItems', filterItems)
         return {
           ...state,
           filterItems,
@@ -85,7 +86,14 @@ export default (state = INITIAL_STATE, action) => {
         getTaskListRequestState: RequestStates.success,
         getTaskListSource: null,
         getTaskListError: null,
-        taskList: action.payload.data.taskList,
+        taskList: [
+          ...state.taskList,
+          ...action.payload.data.data,
+        ],
+        taskListMetadata: {
+          ...state.taskListMetadata,
+          ...action.payload.data.meta_key,
+        }
       };
     case actionTypes.GET_TASK_LIST_ERROR:
       return {

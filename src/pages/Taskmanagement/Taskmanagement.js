@@ -7,23 +7,21 @@ import Header from '../../components/Header/Header';
 import Taskmanagementtable from '../../components/Taskmanagementtable/Taskmanagementtablecontainer';
 
 function Taskmanagement() {
-  const isUserLoggedIn = useSelector(state => state.app.userDetails);
+  const isUserLoggedIn = localStorage.getItem('token');
   const history = useHistory();
 
-  useEffect(() => {
-    if(!isUserLoggedIn) {
-      history.push('/login');
-    }
-  }, []);
+  if(!isUserLoggedIn) {
+    history.push('/login');
+  }
 
   return (
     <div className="TaskmanagementStyles">
-        <Header />
-        <div className="ContentArea">
-          <div className="wrapper">
-            <Taskmanagementtable />
-          </div>
+      <Header />
+      <div className="ContentArea">
+        <div className="wrapper">
+          <Taskmanagementtable />
         </div>
+      </div>
     </div>
   )
 }

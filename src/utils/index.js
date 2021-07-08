@@ -16,11 +16,11 @@ const dateInFuture = (firstDate, secondDate) => {
   return false;
 };
 
-export const formattedDateAndClassGetter = (date) => {
+export const getFormattedDateAndClass = (date) => {
   const today = new Date();
   let dueDateClass = "green";
   let dueDate = "Today";
-
+  
   const taskDate = new Date(date);
   const pastDate = dateInPast(taskDate, today);
   const futureDate = dateInFuture(taskDate, today);

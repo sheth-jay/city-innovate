@@ -25,11 +25,7 @@ export const addFilterItems = (filterListId, filterItems) => ({
   payload: { filterListId, filterItems },
 });
 
-export const getTaskList = () => ({
+export const getTaskList = (page = 1) => ({
   type: actionTypes.GET_TASK_LIST,
-  payload: Promise.resolve(() => ({
-    data: {
-      taskList,
-    }
-  }))
+  payload: api.get(`/tasks?page=${page}`),
 })

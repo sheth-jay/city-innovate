@@ -1,9 +1,30 @@
 import axios from 'axios'
 import { BASE_URL } from '../config'
 
+function makeHeaders() {
+  let headerObj = {};
+
+  if (localStorage.getItem('token')) {
+    const token = localStorage.getItem('token');
+    headerObj = {
+      authentication_token: token,
+    };
+  }
+
+  return headerObj;
+};
+
 const Api = axios.create({
   baseURL: BASE_URL,
-})
+});
+
+
+Api.interceptors.request.use((request) => {
+  if (!request.ignoreAuth) {
+    request.headers = makeHeaders();
+  }
+  return request;
+});
 
 Api.interceptors.response.use(
   (response) => {
