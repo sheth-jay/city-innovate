@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import './Taskmanagement.scss'
-import Header from '../../components/Header/Header'
-import Taskmanagementtable from '../../components/Taskmanagementtable/Taskmanagementtable'
-
+import './Taskmanagement.scss';
+import Header from '../../components/Header/Header';
+import Taskmanagementtable from '../../components/Taskmanagementtable/Taskmanagementtablecontainer';
 
 function Taskmanagement() {
   return (
@@ -18,4 +17,4 @@ function Taskmanagement() {
   )
 }
 
-export default Taskmanagement
+export default Taskmanagement;

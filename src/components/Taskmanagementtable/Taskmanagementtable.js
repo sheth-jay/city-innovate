@@ -1,9 +1,9 @@
-import React from 'react'
-import { Button, Drawer, Table, Tag } from 'antd'
+import React from 'react';
+import { Button, Drawer, Table, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 
-import './Taskmanagementtable.scss'
-import { images } from '../../config/images'
+import './Taskmanagementtable.scss';
+import { images } from '../../config/images';
 import RightIcon from '../icons/RightIcon';
 
 const columns = [
@@ -39,367 +39,49 @@ const columns = [
 	},
 ];
 
-const data = (showDrawer) => {
-	return (
-		[
-			{
-				key: '1',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section <span className="tag">NEW</span></p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '2',
-				taskname: (
-					<div className="TaskName">
-						<p>There are several issues with the naming There are several issues with the naming</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'SF Solicitation',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '3',
-				taskname: (
-					<div className="TaskName">
-						<p>Ensure the documents are in the right format</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '4',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>7.2 Technical Information</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '5',
-				taskname: (
-					<div className="TaskName">
-						<p>Liquidated damages will be removed</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '6',
-				taskname: (
-					<div className="TaskName">
-						<p>Several issues with the specifications from</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'Discovery Solici',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date red">Oct 12</span>
-				),
-			},
-			{
-				key: '7',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section <span className="tag">NEW</span></p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-						<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '8',
-				taskname: (
-					<div className="TaskName">
-						<p>There are several issues with the naming</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'SF Solicitation',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '9',
-				taskname: (
-					<div className="TaskName">
-						<p>Ensure the documents are in the right format</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '10',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>7.2 Technical Information</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '11',
-				taskname: (
-					<div className="TaskName">
-							<p>Liquidated damages will be removed</p>
-							<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '12',
-				taskname: (
-					<div className="TaskName">
-						<p>Several issues with the specifications from</p>
-						<Button type="link">See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'Discovery Solici',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date red">Oct 12</span>
-				),
-			},
-		]
-	)
+const data = (taskList, showDrawer) => {
+	return taskList && taskList.map(task => {
+		return ({
+			key: task.id,
+			taskname: (
+				<div className="TaskName">
+					<p>{task.name} <span className="tag">NEW</span></p>
+					<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
+				</div>
+			),
+			document: task.document,
+			section: (
+				<Tag>task.section</Tag>
+			),
+			labels: (
+				<div className="TagLabels">
+					{
+						task.labels && task.labels.map(label => {
+							return (<Tag key={label}>{label}</Tag>)
+						})
+					}
+				</div>
+			),
+			assigned: (
+				<div className="Assigned">
+					{
+						task.assignedTo && task.assignedTo.map((item, index) => {
+							return (<Avatar key={index} size={25} icon={<img src={images[item.user.imageUrl]} alt=""/>} />)
+						})
+					}
+				</div>
+			),
+			duedate: (
+				<span className="date green">{task.dueDate}</span>
+			),
+		});
+	})
 };
 
 class Taskmanagementtable extends React.Component {
-
+	constructor(props) {
+		super(props);
+	}
 	state = {
 		selectedRowKeys: [],
 		visible: false,
@@ -427,13 +109,13 @@ class Taskmanagementtable extends React.Component {
 	render() {
 		const { selectedRowKeys, visible } = this.state;
 		const rowSelection = {
-				selectedRowKeys,
-				onChange: this.onSelectChange,
+			selectedRowKeys,
+			onChange: this.onSelectChange,
 		};
-
+		
 		return (
 			<div className="TaskmanagementtableStyles">
-				<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.showDrawer)} />
+				<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} />
 				<Drawer
 					title="Basic Drawer"
 					placement="right"

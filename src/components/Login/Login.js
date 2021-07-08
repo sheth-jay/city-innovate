@@ -1,17 +1,24 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { connect } from 'react-redux';
-import { useDispatch } from 'react-redux'
+import { Form, Input, Button, Checkbox, message } from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import './Login.scss'
-import * as actions from './redux/actions';
+import './Login.scss';
+import * as actions from '../../appRedux/actions';
 
-const Login = ({ login }) => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const onFinish = values => {
-    login(values.emailAddress, values.password)
-      .then(() => console.log('you have logged in successfully'))
-      .catch((err) => console.log(err));
+    dispatch(actions.login(values.emailAddress, values.password))
+      .then(() => {
+        message.success('You have logged in successfully');
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   
   return (
@@ -70,8 +77,4 @@ const Login = ({ login }) => {
   )
 }
 
-const mapDispatchToProps = dispatch => ({
-  login: (emailAddress, password) => dispatch(actions.login(emailAddress, password))
-});
-
-export default connect(null, mapDispatchToProps)(Login)
+export default Login

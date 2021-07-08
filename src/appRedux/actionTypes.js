@@ -1,0 +1,16 @@
+export const LOGIN = 'LOGIN';
+export const LOGIN_LOADING = 'LOGIN_LOADING';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+export const SIGNUP = 'SIGNUP';
+export const SIGNUP_LOADING = 'SIGNUP_LOADING';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_ERROR = 'SIGNUP_ERROR';
+
+export const ADD_FILTER_ITEMS = 'ADD_FILTER_ITEMS';
+
+export const GET_TASK_LIST = 'GET_TASK_LIST';
+export const GET_TASK_LIST_LOADING = 'GET_TASK_LIST_LOADING';
+export const GET_TASK_LIST_SUCCESS = 'GET_TASK_LIST_SUCCESS';
+export const GET_TASK_LIST_ERROR = 'GET_TASK_LIST_ERROR';
