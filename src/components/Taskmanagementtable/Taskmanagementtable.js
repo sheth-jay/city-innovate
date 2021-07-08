@@ -5,6 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import './Taskmanagementtable.scss';
 import { images } from '../../config/images';
 import RightIcon from '../icons/RightIcon';
+import { formattedDateAndClassGetter } from '../../utils';
 
 const columns = [
 	{
@@ -41,6 +42,7 @@ const columns = [
 
 const data = (taskList, showDrawer) => {
 	return taskList && taskList.map(task => {
+		const { dueDateClass, dueDate } = formattedDateAndClassGetter(task.dueDate);
 		return ({
 			key: task.id,
 			taskname: (
@@ -72,7 +74,7 @@ const data = (taskList, showDrawer) => {
 				</div>
 			),
 			duedate: (
-				<span className="date green">{task.dueDate}</span>
+				<span className={`date ${dueDateClass}`}>{dueDate}</span>
 			),
 		});
 	})

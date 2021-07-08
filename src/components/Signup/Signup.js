@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message } from 'antd';
 
@@ -9,11 +9,17 @@ import * as actions from '../../appRedux/actions';
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onFinish = values => {
     dispatch(actions.signup(values.firstName, values.lastName, values.emailAddress, values.password, values.confirmPassword))
-      .then(() => message.success('you have signed up successfully, please login to continue'))
-      .catch((err) => message.error('Something went wrong, please try again'));
+      .then(() => {
+        history.push('/login');
+        message.success('you have signed up successfully, please login to continue');
+      })
+      .catch((err) => {
+        message.error(err.response.data.errors);
+      });
   };
 
   return (

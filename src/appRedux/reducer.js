@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loginRequestState: RequestStates.error,
-        loginError: console.log(action.payload),
+        loginError: action.payload.response.data.errors,
       };
     case actionTypes.SIGNUP_LOADING:
       return {
@@ -48,7 +48,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         signupRequestState: RequestStates.error,
-        signupError: console.log(action.payload),
+        signupError: action.payload.response.data.errors,
       };
       case actionTypes.ADD_FILTER_ITEMS: {
         let filterItems;
@@ -92,7 +92,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         getTaskListRequestState: RequestStates.error,
         getTaskListSource: null,
-        getTaskListError: console.log(action.payload),
+        getTaskListError: action.payload.response.data.errors,
       };
     default:
       return state
