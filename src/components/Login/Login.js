@@ -17,7 +17,7 @@ const Login = () => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        message.error('Please enter correct email address or password');
       });
   };
   
@@ -34,6 +34,10 @@ const Login = () => {
       <Form.Item
         name="emailAddress"
         rules={[
+          {
+            type: 'email',
+            message: 'Please enter a valid E-mail Address!',
+          },
           {
             required: true,
             message: 'Please enter your Email Address',

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Form, Input, Button, message } from 'antd';
 
 import './Signup.scss';
 import * as actions from '../../appRedux/actions';
@@ -12,8 +12,8 @@ const Signup = () => {
 
   const onFinish = values => {
     dispatch(actions.signup(values.firstName, values.lastName, values.emailAddress, values.password, values.confirmPassword))
-      .then(() => console.log('you have signed up successfully, please check your email to complete this process'))
-      .catch((err) => console.log(err));
+      .then(() => message.success('you have signed up successfully, please login to continue'))
+      .catch((err) => message.error('Something went wrong, please try again'));
   };
 
   return (
@@ -52,6 +52,10 @@ const Signup = () => {
         name="emailAddress"
         rules={[
           {
+            type: 'email',
+            message: 'Please enter a valid E-mail Address!',
+          },
+          {
             required: true,
             message: 'Please enter Email Address',
           },
@@ -75,11 +79,21 @@ const Signup = () => {
       </Form.Item>
       <Form.Item
         name="confirmPassword"
+        dependencies={['password']}
+        hasFeedback
         rules={[
           {
             required: true,
-            message: 'Please enter Confirm Password',
+            message: 'Please confirm your password!',
           },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('The two passwords that you entered do not match!'));
+            },
+          }),
         ]}
       >
         <Input
@@ -99,4 +113,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Signup;
