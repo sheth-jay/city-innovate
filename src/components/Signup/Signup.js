@@ -1,13 +1,25 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Form, Input, Button, message } from 'antd';
 
-import './Signup.scss'
+import './Signup.scss';
+import * as actions from '../../appRedux/actions';
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const onFinish = values => {
-    console.log('Received values of form: ', values);
+    dispatch(actions.signup(values.firstName, values.lastName, values.emailAddress, values.password, values.confirmPassword))
+      .then(() => {
+        history.push('/login');
+        message.success('you have signed up successfully, please login to continue');
+      })
+      .catch((err) => {
+        message.error(err.response.data.errors);
+      });
   };
 
   return (
@@ -21,33 +33,37 @@ const Signup = () => {
     >
       <h1>Signup</h1>
       <Form.Item
-        name="firstname"
+        name="firstName"
         rules={[
           {
             required: true,
-            message: 'Please input your First Name',
+            message: 'Please enter First Name',
           },
         ]}
       >
         <Input placeholder="First Name" />
       </Form.Item>
       <Form.Item
-        name="lastname"
+        name="lastName"
         rules={[
           {
             required: true,
-            message: 'Please input your Last Name',
+            message: 'Please enter Last Name',
           },
         ]}
       >
         <Input placeholder="Last Name" />
       </Form.Item>
       <Form.Item
-        name="email"
+        name="emailAddress"
         rules={[
           {
+            type: 'email',
+            message: 'Please enter a valid E-mail Address!',
+          },
+          {
             required: true,
-            message: 'Please input your Email',
+            message: 'Please enter Email Address',
           },
         ]}
       >
@@ -58,7 +74,7 @@ const Signup = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your Password',
+            message: 'Please enter Password',
           },
         ]}
       >
@@ -68,12 +84,22 @@ const Signup = () => {
         />
       </Form.Item>
       <Form.Item
-        name="password"
+        name="confirmPassword"
+        dependencies={['password']}
+        hasFeedback
         rules={[
           {
             required: true,
-            message: 'Please input your Password',
+            message: 'Please confirm your password!',
           },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('The two passwords that you entered do not match!'));
+            },
+          }),
         ]}
       >
         <Input
@@ -93,4 +119,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Signup;

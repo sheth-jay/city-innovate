@@ -1,14 +1,18 @@
-import React from 'react'
-import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs } from 'antd'
+import React from 'react';
+import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar';
 import {CloseCircleFilled} from '@ant-design/icons';
-import './Taskmanagementtable.scss'
-import { images } from '../../config/images'
+import './Taskmanagementtable.scss';
+import { images } from '../../config/images';
 import RightIcon from '../icons/RightIcon';
 import OverviewIcon from '../icons/OverviewIcon';
 import ActivityIcon from '../icons/ActivityIcon';
 import CalenderIcon from '../icons/CalenderIcon';
 import AddIcon from '../icons/AddIcon';
+import { formattedDateAndClassGetter } from '../../utils';
+
+import OverviewTab from './../OverviewTab/OverviewTab';
+import ActivityTab from './../ActivityTab/ActivityTab';
 
 const columns = [
 	{
@@ -43,364 +47,44 @@ const columns = [
 	},
 ];
 
-
-const data = (showDrawer) => {
-	return (
-		[
-			{
-				key: '1',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section <span className="tag">NEW</span></p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '2',
-				taskname: (
-					<div className="TaskName">
-						<p>There are several issues with the naming There are several issues with the naming</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'SF Solicitation',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '3',
-				taskname: (
-					<div className="TaskName">
-						<p>Ensure the documents are in the right format</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '4',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>7.2 Technical Information</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '5',
-				taskname: (
-					<div className="TaskName">
-						<p>Liquidated damages will be removed</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '6',
-				taskname: (
-					<div className="TaskName">
-						<p>Several issues with the specifications from</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'Discovery Solici',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date red">Oct 12</span>
-				),
-			},
-			{
-				key: '7',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section <span className="tag">NEW</span></p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-						<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '8',
-				taskname: (
-					<div className="TaskName">
-						<p>There are several issues with the naming</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'SF Solicitation',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date green">Today</span>
-				),
-			},
-			{
-				key: '9',
-				taskname: (
-					<div className="TaskName">
-						<p>Ensure the documents are in the right format</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '10',
-				taskname: (
-					<div className="TaskName">
-						<p>Complete this section</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>7.2 Technical Information</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '11',
-				taskname: (
-					<div className="TaskName">
-							<p>Liquidated damages will be removed</p>
-							<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'CDT STP FO',
-				section: (
-					<Tag>2.0 Legal Assesment</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date grey">Dec 22</span>
-				),
-			},
-			{
-				key: '12',
-				taskname: (
-					<div className="TaskName">
-						<p>Several issues with the specifications from</p>
-						<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
-					</div>
-				),
-				document: 'Discovery Solici',
-				section: (
-					<Tag>4.1 Informational Attatchments</Tag>
-				),
-				labels: (
-					<div className="TagLabels">
-						<Tag>ADA</Tag>
-						<Tag>Legal</Tag>
-					</div>
-				),
-				assigned: (
-					<div className="Assigned">
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-						<Avatar size={25} icon={<img src={images.user1} alt=""/>} />
-					</div>
-				),
-				duedate: (
-					<span className="date red">Oct 12</span>
-				),
-			},
-		]
-	)
+const data = (taskList, showDrawer) => {
+	return taskList && taskList.map(task => {
+		const { dueDateClass, dueDate } = formattedDateAndClassGetter(task.dueDate);
+		return ({
+			key: task.id,
+			taskname: (
+				<div className="TaskName">
+					<p>{task.name} <span className="tag">NEW</span></p>
+					<Button type="link" onClick={showDrawer}>See Details <RightIcon /></Button>
+				</div>
+			),
+			document: task.document,
+			section: (
+				<Tag>task.section</Tag>
+			),
+			labels: (
+				<div className="TagLabels">
+					{
+						task.labels && task.labels.map(label => {
+							return (<Tag key={label}>{label}</Tag>)
+						})
+					}
+				</div>
+			),
+			assigned: (
+				<div className="Assigned">
+					{
+						task.assignedTo && task.assignedTo.map((item, index) => {
+							return (<Avatar key={index} size={25} icon={<img src={images[item.user.imageUrl]} alt=""/>} />)
+						})
+					}
+				</div>
+			),
+			duedate: (
+				<span className={`date ${dueDateClass}`}>{dueDate}</span>
+			),
+		});
+	})
 };
 
 function onChange(e) {
@@ -411,8 +95,18 @@ const { TabPane } = Tabs;
 function callback(key) {
   console.log(key);
 }
+const menu = (
+	<Menu className="drawer-menu">
+	  <Menu.Item key="0"><a href="">Archive</a></Menu.Item>
+	  <Menu.Item key="1">
+		<a href="">Allow Guest Contributors to edit</a>
+	  </Menu.Item>
+	</Menu>
+);
 class Taskmanagementtable extends React.Component {
-
+	constructor(props) {
+		super(props);
+	}
 	state = {
 		selectedRowKeys: [],
 		visible: false,
@@ -442,13 +136,13 @@ class Taskmanagementtable extends React.Component {
 	render() {
 		const { selectedRowKeys, visible } = this.state;
 		const rowSelection = {
-				selectedRowKeys,
-				onChange: this.onSelectChange,
+			selectedRowKeys,
+			onChange: this.onSelectChange,
 		};
-
+		
 		return (
 			<div className="TaskmanagementtableStyles">
-				<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.showDrawer)} />
+				<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} />
 				<Drawer
 					placement="right"
 					closable={false}
@@ -460,8 +154,10 @@ class Taskmanagementtable extends React.Component {
 						<Checkbox onChange={onChange}>Mark as Complete</Checkbox>
 						<div className="right_header_wrap">
 							<a href=""><img src={images.Attachment} /></a>
-							<a href=""><img src={images.unionLink} /></a>
-							<a href=""><img src={images.drawerClose} /></a>
+							<Dropdown overlay={menu} trigger={['click']}>
+								<a href="" onClick={e => e.preventDefault()}><img src={images.unionLink} /></a>
+							</Dropdown>
+							<Button className="close-drawer" onClick={this.onClose}><img src={images.drawerClose} /></Button>
 						</div>
 					</div>
 					<Breadcrumb>
@@ -474,69 +170,10 @@ class Taskmanagementtable extends React.Component {
 					<div className="">
 						<Tabs defaultActiveKey="1" onChange={callback}>
 							<TabPane tab={<span>Overview <OverviewIcon /></span>} key="1">
-								<div className="overview-info-wrap">
-									<div className="info">
-										<span>Assignee</span>
-										<div className="info-data">
-											<div className="assignee-info">
-												<img src={images.assignee1}/>
-												<span>Jessica Lopez</span>
-											</div>
-											<div className="assignee-info">
-												<div className="delete-opt">
-													<img src={images.assignee1}/>
-													<span>Mark Ford</span>
-													<a href=""><CloseCircleFilled /></a>
-												</div>
-												<a href="" className="addicon"><AddIcon /></a>
-											</div>
-											<div className="assignee-info">
-												<img src={images.assignee1}/>
-												<span>James Twain</span>
-											</div>
-										</div>
-									</div>
-									<div className="info">
-										<span>Due date</span>
-										<div className="info-data">
-											<CalenderIcon /> Today
-										</div>
-									</div>
-									<div className="info">
-										<span>Labels</span>
-										<div className="info-data">
-											<span className="tags">Legal</span>
-											<span className="tags">ADA</span>
-										</div>
-									</div>
-									<div className="info">
-										<span>Section</span>
-										<div className="info-data">
-											<span className="section-tags">2.0 Legal Assesment</span>
-										</div>
-									</div>
-									<div className="info">
-										<span>Document</span>
-										<div className="info-data">
-											<span className="doc-text">CDT STP FO</span>
-										</div>
-									</div>
-									<div className="info">
-										<span>Status</span>
-										<div className="info-data">
-											<span className="status">In Progress</span>
-										</div>
-									</div>
-									<div className="info">
-										<span>Description</span>
-										<div className="info-desc">
-											<p>Below are the details we have for EDR2 Independent Verification & Validation (IV&V) and Quality Assurance (QA). You'll also find options for updating these details or removing EDR2 Independent Verification & Validation (IV&V) and Quality Assurance (QA) from California Department of State Hospitals - CDT (IT) Templates entirely.</p>
-										</div>
-									</div>
-								</div>
+								<OverviewTab />
 							</TabPane>
 							<TabPane tab={<span>Activity <ActivityIcon /></span>} key="2">
-							Content of Tab Pane 2
+								<ActivityTab />
 							</TabPane>
 						</Tabs>
 					</div>

@@ -6,4 +6,5 @@ export const images = {
   drawerClose: require('./../assets/images/drawer-close.png'),
   assignee1: require('./../assets/images/assignee1.png'),
   avtarFooter: require('./../assets/images/avtar-footer.svg'),
+  Listavtar: require('./../assets/images/list-avtar.png'),
 }
