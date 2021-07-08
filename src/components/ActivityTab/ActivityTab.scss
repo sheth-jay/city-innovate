@@ -1,0 +1,64 @@
+@import './../../layout/variables.scss';
+
+.activity-wrap {
+  .ant-dropdown-link {
+    color: $black1;
+    font-size: 14px;
+  }
+  .list-wrap {
+    padding-left: 0;
+    .list {
+      display: flex;
+      padding: 16px 0;
+      border-bottom: 1px solid #ebebf0;
+      .avtar-list {
+        width: 37px;
+        margin-right: 8px;
+      }
+      .list-content {
+        flex: 1 1 100%;
+        h3 {
+          font-size: 16px;
+          color: $black1;
+          margin-bottom: 0;
+        }
+        .description {
+          max-width: 290px;
+          p {
+            font-size: 14px;
+            line-height: 20px;
+            color: $black1;
+            margin-bottom: 0;
+          }
+          .date {
+            color: $gracolor3;
+            font-size: 12px;
+          }
+          &.highlitedText {
+            .highlight {
+              color: $gracolor5;
+              font-size: 12px;
+            }
+            .desc-text {
+              position: relative;
+              color: $black1;
+              padding-left: 12px;
+              &::before {
+                position: absolute;
+                left: 0;
+                height: 20px;
+                width: 2px;
+                background-color: #dce1e6;
+                content: '';
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .conv-text {
+    color: $gracolor3;
+    font-size: 12px;
+  }
+}

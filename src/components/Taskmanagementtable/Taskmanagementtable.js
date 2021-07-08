@@ -1,11 +1,18 @@
 import React from 'react';
-import { Button, Drawer, Table, Tag } from 'antd';
+import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar';
-
+import {CloseCircleFilled} from '@ant-design/icons';
 import './Taskmanagementtable.scss';
 import { images } from '../../config/images';
 import RightIcon from '../icons/RightIcon';
+import OverviewIcon from '../icons/OverviewIcon';
+import ActivityIcon from '../icons/ActivityIcon';
+import CalenderIcon from '../icons/CalenderIcon';
+import AddIcon from '../icons/AddIcon';
 import { formattedDateAndClassGetter } from '../../utils';
+
+import OverviewTab from './../OverviewTab/OverviewTab';
+import ActivityTab from './../ActivityTab/ActivityTab';
 
 const columns = [
 	{
@@ -80,6 +87,22 @@ const data = (taskList, showDrawer) => {
 	})
 };
 
+function onChange(e) {
+	console.log(`checked = ${e.target.checked}`);
+}
+const { TabPane } = Tabs;
+
+function callback(key) {
+  console.log(key);
+}
+const menu = (
+	<Menu className="drawer-menu">
+	  <Menu.Item key="0"><a href="">Archive</a></Menu.Item>
+	  <Menu.Item key="1">
+		<a href="">Allow Guest Contributors to edit</a>
+	  </Menu.Item>
+	</Menu>
+);
 class Taskmanagementtable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -108,6 +131,8 @@ class Taskmanagementtable extends React.Component {
 		this.setState({visible: false});
 	};
 
+	
+
 	render() {
 		const { selectedRowKeys, visible } = this.state;
 		const rowSelection = {
@@ -119,15 +144,51 @@ class Taskmanagementtable extends React.Component {
 			<div className="TaskmanagementtableStyles">
 				<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} />
 				<Drawer
-					title="Basic Drawer"
 					placement="right"
 					closable={false}
 					onClose={this.onClose}
 					visible={visible}
+					width={450}
 				>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
+					<div className="drawer_header">
+						<Checkbox onChange={onChange}>Mark as Complete</Checkbox>
+						<div className="right_header_wrap">
+							<a href=""><img src={images.Attachment} /></a>
+							<Dropdown overlay={menu} trigger={['click']}>
+								<a href="" onClick={e => e.preventDefault()}><img src={images.unionLink} /></a>
+							</Dropdown>
+							<Button className="close-drawer" onClick={this.onClose}><img src={images.drawerClose} /></Button>
+						</div>
+					</div>
+					<Breadcrumb>
+						<Breadcrumb.Item>
+							<a href="">Solicitation</a>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item>CDT STP FO</Breadcrumb.Item>
+					</Breadcrumb>
+					<h2>There are several issues with the naming of sections</h2>
+					<div className="">
+						<Tabs defaultActiveKey="1" onChange={callback}>
+							<TabPane tab={<span>Overview <OverviewIcon /></span>} key="1">
+								<OverviewTab />
+							</TabPane>
+							<TabPane tab={<span>Activity <ActivityIcon /></span>} key="2">
+								<ActivityTab />
+							</TabPane>
+						</Tabs>
+					</div>
+					<div className="drawer-footer">
+						<div className="profile-info">
+							<img src={images.avtarFooter} />
+							<h2>Jordy Alba created this task</h2>
+							<span>9:45 AM Today</span>
+						</div>
+						<div className="task-update-info">
+							<p>Mark Ford updated this task, 10:22 AM Tue, 22</p>
+							<p>Mark Ford commented, 9:45 AM Today</p>
+							<p>Task Assinged, 9:45 AM Today</p>
+						</div>
+					</div>
 				</Drawer>
 			</div>
 		);
