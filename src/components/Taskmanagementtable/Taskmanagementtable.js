@@ -9,6 +9,11 @@ import RightIcon from '../icons/RightIcon';
 import { images } from '../../config/images';
 import OverviewIcon from '../icons/OverviewIcon';
 import ActivityIcon from '../icons/ActivityIcon';
+import ChecklistIcon from '../icons/ChecklistIcon';
+import UserIcon from '../icons/UserIcon';
+import DateIcon from '../icons/DateIcon';
+import DeleteIcon from '../icons/DeleteIcon';
+import CloseIcon from '../icons/CloseIcon';
 import CalenderIcon from '../icons/CalenderIcon';
 import { getFormattedDateAndClass } from '../../utils';
 import OverviewTab from './../OverviewTab/OverviewTab';
@@ -150,9 +155,22 @@ class Taskmanagementtable extends React.Component {
 		
 		return (
 			<div className="TaskmanagementtableStyles">
-				<Spin spinning={this.props.loading}>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} />
-				</Spin>
+				<div className="dataTable-wrap">
+					<Spin spinning={this.props.loading}>
+						<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} />
+					</Spin>
+					<div className="selected-task-popover">
+						<span>2 tasks selected</span>
+						<div className="action-wrap">
+							<Button><ChecklistIcon /></Button>
+							<Button><UserIcon /></Button>
+							<Button><DateIcon/></Button>
+							<Button><DeleteIcon /></Button>
+							<span>|</span>
+							<Button className="close-btn"><CloseIcon /></Button>
+						</div>
+					</div>
+				</div>
 				<Drawer
 					placement="right"
 					closable={false}
