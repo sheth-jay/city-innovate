@@ -1,11 +1,15 @@
 import React from 'react';
-import { Button, Checkbox, Col, Dropdown, Input, Menu, Row, Modal } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Button, Checkbox, Col, Dropdown, Input, Menu, Row, message } from 'antd';
 
 import './Header.scss';
 import PlusIcon from '../icons/PlusIcon';
 import DownIcon from '../icons/DownIcon';
 import SearchIcon from '../icons/SearchIcon';
 import { images } from '../../config/images';
+import * as actions from '../../appRedux/actions';
 
 const solicitation = (props) => {
   return (
@@ -162,19 +166,34 @@ const thisweek = (props) => {
 };
 
 const Header = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const getValues = (value, name) => {
-  console.log(value, name);
-}
-const handleSolicitationChange = checkedValues => {
-  console.log(checkedValues);
-};
-const userDropdown = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="">Logout</a>
-    </Menu.Item>
-  </Menu>
-);
+    console.log(value, name);
+  }
+  const handleSolicitationChange = checkedValues => {
+    console.log(checkedValues);
+  };
+
+  const handleLogout = () => {
+    dispatch(actions.logout())
+      .then(() => {
+        message.success('You have been logged out');
+        history.push('/login');
+      })
+      .catch((err) => {
+        message.error(err.response.data.errors);
+      });
+  };
+
+  const userDropdown = (
+    <Menu>
+      <Menu.Item key="0">
+        <Button type="link" onClick={handleLogout}>Logout</Button>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div className="HeaderStyles">
@@ -196,7 +215,6 @@ const userDropdown = (
                 <Dropdown overlay={userDropdown} trigger={['click']}>
                   <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={images.user1} alt=""/></Button>
                 </Dropdown>
-                
               </div>
             </Col>
           </Row>
@@ -254,4 +272,4 @@ const userDropdown = (
   )
 }
 
-export default Header
+export default Header;

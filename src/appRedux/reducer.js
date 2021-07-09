@@ -4,6 +4,9 @@ import RequestStates from '../utils/request-states';
 const INITIAL_STATE = {
   loginRequestState: RequestStates.init,
   loginError: null,
+  userDetails: [],
+  logoutRequestState: RequestStates.init,
+  logoutError: null,
   signupRequestState: RequestStates.init,
   signupError: null,
   filterItems: {},
@@ -39,6 +42,26 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loginRequestState: RequestStates.error,
         loginError: action.payload.response.data.errors,
+      };
+    case actionTypes.LOGOUT_LOADING:
+      return {
+        ...state,
+        logoutRequestState: RequestStates.loading,
+        logoutError: null,
+      };
+    case actionTypes.LOGOUT_SUCCESS:
+      localStorage.clear();
+      return {
+        ...state,
+        logoutRequestState: RequestStates.success,
+        logoutError: null,
+        userDetails: [],
+      };
+    case actionTypes.LOGOUT_ERROR:
+      return {
+        ...state,
+        logoutRequestState: RequestStates.error,
+        logoutError: action.payload.response.data.errors,
       };
     case actionTypes.SIGNUP_LOADING:
       return {

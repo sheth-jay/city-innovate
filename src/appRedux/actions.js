@@ -6,6 +6,11 @@ export const login = (emailAddress, password) => ({
   payload: api.post('/sign_in', { user: { email: emailAddress, password }}),
 });
 
+export const logout = () => ({
+  type: actionTypes.LOGOUT,
+  payload: api.delete('/logout'),
+});
+
 export const signup = (firstName, lastName, emailAddress, password, confirmPassword) => ({
   type: actionTypes.SIGNUP,
   payload: api.post('/sign_up', {
