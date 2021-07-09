@@ -17,35 +17,41 @@ import ActivityTab from './../ActivityTab/ActivityTab';
 const columns = [
 	{
 		title: 'Task name',
-		dataIndex: 'taskname',    
-		sorter: (a, b) => a.taskname - b.taskname,
+		dataIndex: 'taskname',
+		key: 'taskname',
+		sorter: (a, b) => a.taskname.length - b.taskname.length,
+		sortDirections: ['descend'],
 	},
 	{
 		title: 'Document',
 		dataIndex: 'document',
-		sorter: (a, b) => a.document - b.document,
+		// sorter: (a, b) => a.document.length - b.document.length,
 	},
 	{
 		title: 'Section',
 		dataIndex: 'section',
-		sorter: (a, b) => a.section - b.section,
+		// sorter: (a, b) => a.section.length - b.section.length,
 	},
 {
 		title: 'Labels',
 		dataIndex: 'labels',
-		sorter: (a, b) => a.labels - b.labels,
+		// sorter: (a, b) => a.labels.length - b.labels.length,
 	},
 	{
 		title: 'Assigned to',
 		dataIndex: 'assigned',
-		sorter: (a, b) => a.assigned - b.assigned,
+		// sorter: (a, b) => a.assigned.length - b.assigned.length,
 	},
 	{
 		title: 'Due Date',
 		dataIndex: 'duedate',
-		sorter: (a, b) => a.duedate - b.duedate,
+		// sorter: (a, b) => a.duedate - b.duedate,
 	},
 ];
+function dataTableChange(sorter) {
+	console.log('params', sorter);
+}
+
 
 const data = (taskList, showDrawer) => {
 	return taskList && taskList.map(task => {
@@ -113,7 +119,7 @@ class Taskmanagementtable extends React.Component {
 		selectedRowKeys: [],
 		visible: false,
 	};
-
+	
 	start = () => {
 		setTimeout(() => {
 			this.setState({
@@ -145,7 +151,7 @@ class Taskmanagementtable extends React.Component {
 		return (
 			<div className="TaskmanagementtableStyles">
 				<Spin spinning={this.props.loading}>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} />
+					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} />
 				</Spin>
 				<Drawer
 					placement="right"

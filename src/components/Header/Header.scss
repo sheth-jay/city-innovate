@@ -70,6 +70,7 @@
     }
     .ClearAll {
       margin-left: 14px;
+      font-weight: 400;
     }
   }
   .ButtonRight {
@@ -116,9 +117,23 @@
   }
 }
 .userProfile-dropdown {
-  ul {
-    li {
-      padding: 5px 25px;
+  li {
+    padding: 3px 8px;
+    button {
+      padding: 6px 20px;
+      font-weight: 400;
+      border: none;
+      color: $black1;
+      text-align: left;
+    }
+    &:hover {
+      background-color: transparent;
+      button {
+        color: $primary;
+        background: rgba(0, 100, 255, 0.06);
+
+        border-radius: 4px;
+      }
     }
   }
 }

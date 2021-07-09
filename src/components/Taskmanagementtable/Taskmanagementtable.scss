@@ -161,13 +161,15 @@
   .ant-dropdown-menu-item:hover {
     background-color: transparent;
   }
-  a {
+  button {
     display: inline-block;
     width: 100%;
     padding: 8px;
     color: $black1;
     border-radius: 4px;
     font-size: 14px;
+    text-align: left;
+    font-weight: 400;
     &:hover {
       color: $primary;
       background: rgba(0, 100, 255, 0.06);
@@ -255,7 +257,7 @@
       padding: 7px 8px;
       font-size: 15px;
       line-height: 18px;
-      weight: 400;
+      font-weight: 400;
       color: $black1;
       border-radius: 4px;
       svg {
