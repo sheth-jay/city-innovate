@@ -101,3 +101,24 @@
     }
   }
 }
+.task-form-drawer {
+  .ant-drawer-body {
+    padding: 20px;
+    .ant-form-item-label {
+      text-align: left;
+    }
+  }
+  .ButtonRight {
+    text-align: right;
+    button {
+      margin-left: 10px;
+    }
+  }
+}
+.userProfile-dropdown {
+  ul {
+    li {
+      padding: 5px 25px;
+    }
+  }
+}
