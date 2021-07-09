@@ -1,15 +1,18 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { Form, Input, Button, Checkbox, message, Spin } from 'antd';
 
 import './Login.scss';
+import RequestState from '../../utils/request-states';
 import * as actions from '../../appRedux/actions';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.app.loginRequestState === RequestState.loading);
+
   const onFinish = values => {
     dispatch(actions.login(values.emailAddress, values.password))
       .then(() => {
@@ -17,68 +20,70 @@ const Login = () => {
         history.push('/');
       })
       .catch((err) => {
-        message.error('Please enter correct email address or password');
+        message.error(err.response.data.errors);
       });
   };
   
   return (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
-      <h1>Login</h1>
-      <Form.Item
-        name="emailAddress"
-        rules={[
-          {
-            type: 'email',
-            message: 'Please enter a valid E-mail Address!',
-          },
-          {
-            required: true,
-            message: 'Please enter your Email Address',
-          },
-        ]}
+    <Spin spinning={loading}>
+      <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
       >
-        <Input placeholder="Email Address" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter your Password',
-          },
-        ]}
-      >
-        <Input
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
+        <h1>Login</h1>
+        <Form.Item
+          name="emailAddress"
+          rules={[
+            {
+              type: 'email',
+              message: 'Please enter a valid E-mail Address!',
+            },
+            {
+              required: true,
+              message: 'Please enter your Email Address',
+            },
+          ]}
+        >
+          <Input placeholder="Email Address" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your Password',
+            },
+          ]}
+        >
+          <Input
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+
+          <Link className="login-form-forgot" to="/forgot-password">
+            Forgot password
+          </Link>
         </Form.Item>
 
-        <Link className="login-form-forgot" to="/forgot-password">
-          Forgot password
-        </Link>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Login
-        </Button>
-        <span className="center-text or-text">Or</span> 
-        <p className="center-text">Don't have account? <Link to="/signup">Signup</Link></p>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Login
+          </Button>
+          <span className="center-text or-text">Or</span> 
+          <p className="center-text">Don't have account? <Link to="/signup">Signup</Link></p>
+        </Form.Item>
+      </Form>
+    </Spin>
   )
 }
 
-export default Login
+export default Login;

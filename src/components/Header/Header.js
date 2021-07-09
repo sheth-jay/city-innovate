@@ -1,11 +1,15 @@
+
 import React, { useState } from 'react';
 import { Button, Checkbox, message, Col, Dropdown, Input, Menu, Row, Drawer, Form, Upload, Select, DatePicker, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './Header.scss';
 import PlusIcon from '../icons/PlusIcon';
 import DownIcon from '../icons/DownIcon';
 import SearchIcon from '../icons/SearchIcon';
 import { images } from '../../config/images';
+import * as actions from '../../appRedux/actions';
 
 const solicitation = (props) => {
   return (
@@ -195,6 +199,27 @@ function onChange(date, dateString) {
 }
 
 const Header = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const getValues = (value, name) => {
+    console.log(value, name);
+  }
+  const handleSolicitationChange = checkedValues => {
+    console.log(checkedValues);
+  };
+
+  const handleLogout = () => {
+    dispatch(actions.logout())
+      .then(() => {
+        message.success('You have been logged out');
+        history.push('/login');
+      })
+      .catch((err) => {
+        message.error(err.response.data.errors);
+      });
+  };
+
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -226,7 +251,6 @@ const Header = () => {
                 <Dropdown overlay={userDropdown} trigger={['click']}>
                   <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={images.user1} alt=""/></Button>
                 </Dropdown>
-                
               </div>
             </Col>
           </Row>
@@ -373,4 +397,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;

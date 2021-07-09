@@ -18,6 +18,15 @@
       svg {
         vertical-align: middle;
       }
+      &.green {
+        color: $green;
+      }
+      &.grey {
+        color: $gracolor5;
+      }
+      &.red {
+        color: $red;
+      }
       .assignee-info {
         display: flex;
         align-items: center;
