@@ -32,9 +32,33 @@ export const addFilterItems = (filterListId, filterItems) => ({
 export const getTaskList = (page = 1) => ({
   type: actionTypes.GET_TASK_LIST,
   payload: api.get(`/tasks?page=${page}`),
-})
+});
 
 export const getCurrentTaskDetails = (taskId) => ({
   type: actionTypes.GET_CURRENT_TASK_DETAILS,
   payload: api.get(`/tasks/${taskId}`),
-})
+});
+
+export const createTask = (values) => ({
+  type: actionTypes.CREATE_TASK,
+  payload: api.post('/tasks', {
+    task: {
+      title: values.title,
+      description: values.description,
+      label_ids: values.labels,
+      document: values.document,
+      user_ids: values.assigned_to,
+      due_date: values.due_date,
+    }
+  }),
+});
+
+export const getTaskLabels = () => ({
+  type: actionTypes.GET_TASK_LABELS,
+  payload: api.get('/labels'),
+});
+
+export const getUsers = () => ({
+  type: actionTypes.GET_USERS,
+  payload: api.get('/users'),
+});

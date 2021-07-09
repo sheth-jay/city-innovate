@@ -153,6 +153,50 @@ export default (state = INITIAL_STATE, action) => {
         getCurrentTaskDetailsSource: null,
         getCurrentTaskDetailsError: action.payload.response.data.errors,
       };
+    case actionTypes.GET_TASK_LABELS_LOADING:
+      return {
+        ...state,
+        getTaskLabelRequestState: RequestStates.loading,
+        getTaskLabelSource: action.meta && action.meta.source,
+        getTaskLabelError: null,
+      };
+    case actionTypes.GET_TASK_LABELS_SUCCESS:
+      return {
+        ...state,
+        getTaskLabelRequestState: RequestStates.success,
+        getTaskLabelSource: null,
+        getTaskLabelError: null,
+        taskLabels: action.payload.data.data,
+      };
+    case actionTypes.GET_TASK_LABELS_ERROR:
+      return {
+        ...state,
+        getTaskLabelRequestState: RequestStates.error,
+        getTaskLabelSource: null,
+        getTaskLabelError: action.payload.response.data.errors,
+      };
+    case actionTypes.GET_USERS_LOADING:
+      return {
+        ...state,
+        getUsersRequestState: RequestStates.loading,
+        getUsersSource: action.meta && action.meta.source,
+        getUsersError: null,
+      };
+    case actionTypes.GET_USERS_SUCCESS:
+      return {
+        ...state,
+        getUsersRequestState: RequestStates.success,
+        getUsersSource: null,
+        getUsersError: null,
+        users: action.payload.data.data,
+      };
+    case actionTypes.GET_USERS_ERROR:
+      return {
+        ...state,
+        getUsersRequestState: RequestStates.error,
+        getUsersSource: null,
+        getUsersError: action.payload.response.data.errors,
+      };
     default:
       return state
   }
