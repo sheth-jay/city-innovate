@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, Col, Dropdown, Input, Menu, Row } from 'antd';
+import { Button, Checkbox, Col, Dropdown, Input, Menu, Row, Modal } from 'antd';
 
 import './Header.scss';
 import PlusIcon from '../icons/PlusIcon';
@@ -163,11 +163,19 @@ const thisweek = (props) => {
 
 const Header = () => {
   const getValues = (value, name) => {
-    console.log(value, name);
-  }
-  const handleSolicitationChange = checkedValues => {
-    console.log(checkedValues);
-  };
+  console.log(value, name);
+}
+const handleSolicitationChange = checkedValues => {
+  console.log(checkedValues);
+};
+const userDropdown = (
+  <Menu>
+    <Menu.Item key="0">
+      <a href="">Logout</a>
+    </Menu.Item>
+  </Menu>
+);
+
   return (
     <div className="HeaderStyles">
       <div className="wrapper">
@@ -185,7 +193,10 @@ const Header = () => {
             </Col>
             <Col xs={6} md={8}>
               <div className="HeaderRight">
-                <Button type="link" className="UserBorder"><img src={images.user1} alt=""/></Button>
+                <Dropdown overlay={userDropdown} trigger={['click']}>
+                  <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={images.user1} alt=""/></Button>
+                </Dropdown>
+                
               </div>
             </Col>
           </Row>
@@ -239,7 +250,7 @@ const Header = () => {
         </Row>
         </div>
       </div>
-    </div>
+    </div>   
   )
 }
 
