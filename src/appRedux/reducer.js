@@ -2,6 +2,8 @@ import * as actionTypes from './actionTypes';
 import RequestStates from '../utils/request-states';
 
 const INITIAL_STATE = {
+  loginRequestState: RequestStates.init,
+  loginError: null,
   signupRequestState: RequestStates.init,
   signupError: null,
   filterItems: {},
@@ -10,6 +12,10 @@ const INITIAL_STATE = {
   getTaskListError: null,
   taskList: [],
   taskListMetadata: {},
+  currentTaskDetails: {},
+  getCurrentTaskDetailsRequestState: RequestStates.init,
+  getCurrentTaskDetailsSource: null,
+  getCurrentTaskDetailsError: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -101,6 +107,28 @@ export default (state = INITIAL_STATE, action) => {
         getTaskListRequestState: RequestStates.error,
         getTaskListSource: null,
         getTaskListError: action.payload.response.data.errors,
+      };
+      case actionTypes.GET_CURRENT_TASK_DETAILS_LOADING:
+      return {
+        ...state,
+        getCurrentTaskDetailsRequestState: RequestStates.loading,
+        getCurrentTaskDetailsSource: action.meta && action.meta.source,
+        getCurrentTaskDetailsError: null,
+      };
+    case actionTypes.GET_CURRENT_TASK_DETAILS_SUCCESS:
+      return {
+        ...state,
+        getCurrentTaskDetailsRequestState: RequestStates.success,
+        getCurrentTaskDetailsSource: null,
+        getCurrentTaskDetailsError: null,
+        currentTaskDetails: action.payload.data.data,
+      };
+    case actionTypes.GET_CURRENT_TASK_DETAILS_ERROR:
+      return {
+        ...state,
+        getCurrentTaskDetailsRequestState: RequestStates.error,
+        getCurrentTaskDetailsSource: null,
+        getCurrentTaskDetailsError: action.payload.response.data.errors,
       };
     default:
       return state

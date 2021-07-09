@@ -1,6 +1,5 @@
 import api from '../utils/Api';
 import * as actionTypes from './actionTypes';
-import taskList from '../components/Taskmanagementtable/tasks.json';
 
 export const login = (emailAddress, password) => ({
   type: actionTypes.LOGIN,
@@ -28,4 +27,9 @@ export const addFilterItems = (filterListId, filterItems) => ({
 export const getTaskList = (page = 1) => ({
   type: actionTypes.GET_TASK_LIST,
   payload: api.get(`/tasks?page=${page}`),
+})
+
+export const getCurrentTaskDetails = (taskId) => ({
+  type: actionTypes.GET_CURRENT_TASK_DETAILS,
+  payload: api.get(`/tasks/${taskId}`),
 })

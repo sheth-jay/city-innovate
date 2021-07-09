@@ -1,10 +1,12 @@
-import React from 'react'
-import { Button, Checkbox, Menu, Input, Dropdown } from 'antd'
-import './OverviewTab.scss'
-import CalenderIcon from '../icons/CalenderIcon';
+import React from 'react';
+import { CloseCircleFilled } from '@ant-design/icons';
+import { Button, Checkbox, Menu, Input, Dropdown } from 'antd';
+
+import './OverviewTab.scss';
 import AddIcon from '../icons/AddIcon';
-import {CloseCircleFilled} from '@ant-design/icons';
-import { images } from '../../config/images'
+import { images } from '../../config/images';
+import CalenderIcon from '../icons/CalenderIcon';
+import { getFormattedDateAndClass } from '../../utils';
 
 const addMember = (
 	<Menu className="DropCategory">
@@ -79,73 +81,73 @@ const addMember = (
     </div>
   </Menu>
 );
-class OverviewTab extends React.Component {
-	render() {
-		return (
-			<div className="overview-info-wrap">
-				<div className="info">
-					<span>Assignee</span>
-					<div className="info-data">
-						<div className="assignee-info">
-							<img src={images.assignee1}/>
-							<span>Jessica Lopez</span>
-						</div>
-						<div className="assignee-info">
-							<div className="delete-opt">
-								<img src={images.assignee1}/>
-								<span>Mark Ford</span>
-								<a href=""><CloseCircleFilled /></a>
-							</div>
-							<Dropdown overlay={addMember} trigger={['click']}>
-								<a href="" className="addicon" onClick={e => e.preventDefault()}><AddIcon /></a>
-							</Dropdown>
-						</div>
-						<div className="assignee-info">
-							<img src={images.assignee1}/>
-							<span>James Twain</span>
-						</div>
-					</div>
-				</div>
-				<div className="info">
-					<span>Due date</span>
-					<div className="info-data">
-						<CalenderIcon /> Today
-					</div>
-				</div>
-				<div className="info">
-					<span>Labels</span>
-					<div className="info-data">
-						<span className="tags">Legal</span>
-						<span className="tags">ADA</span>
-					</div>
-				</div>
-				<div className="info">
-					<span>Section</span>
-					<div className="info-data">
-						<span className="section-tags">2.0 Legal Assesment</span>
-					</div>
-				</div>
-				<div className="info">
-					<span>Document</span>
-					<div className="info-data">
-						<span className="doc-text">CDT STP FO</span>
-					</div>
-				</div>
-				<div className="info">
-					<span>Status</span>
-					<div className="info-data">
-						<span className="status">In Progress</span>
-					</div>
-				</div>
-				<div className="info">
-					<span>Description</span>
-					<div className="info-desc">
-						<p>Below are the details we have for EDR2 Independent Verification & Validation (IV&V) and Quality Assurance (QA). You'll also find options for updating these details or removing EDR2 Independent Verification & Validation (IV&V) and Quality Assurance (QA) from California Department of State Hospitals - CDT (IT) Templates entirely.</p>
-					</div>
-				</div>
-			</div>
-		);
-	}
+
+const OverviewTab = ({ currentTaskDetails }) => {
+  const { dueDate, dueDateClass } = getFormattedDateAndClass(currentTaskDetails.due_date)
+  return (
+    <div className="overview-info-wrap">
+      <div className="info">
+        <span>Assignee</span>
+        <div className="info-data">
+          <div className="assignee-info">
+            <img src={images.assignee1}/>
+            <span>Jessica Lopez</span>
+          </div>
+          <div className="assignee-info">
+            <div className="delete-opt">
+              <img src={images.assignee1}/>
+              <span>Mark Ford</span>
+              <a href=""><CloseCircleFilled /></a>
+            </div>
+            <Dropdown overlay={addMember} trigger={['click']}>
+              <a href="" className="addicon" onClick={e => e.preventDefault()}><AddIcon /></a>
+            </Dropdown>
+          </div>
+          <div className="assignee-info">
+            <img src={images.assignee1}/>
+            <span>James Twain</span>
+          </div>
+        </div>
+      </div>
+      <div className="info">
+        <span>Due date</span>
+        <div className={`info-data ${dueDateClass}`}>
+          <CalenderIcon fill={dueDateClass}/> {dueDate}
+        </div>
+      </div>
+      <div className="info">
+        <span>Labels</span>
+        <div className="info-data">
+          <span className="tags">Legal</span>
+          <span className="tags">ADA</span>
+        </div>
+      </div>
+      <div className="info">
+        <span>Section</span>
+        <div className="info-data">
+          <span className="section-tags">2.0 Legal Assesment</span>
+        </div>
+      </div>
+      <div className="info">
+        <span>Document</span>
+        <div className="info-data">
+          <span className="doc-text">CDT STP FO</span>
+        </div>
+      </div>
+      <div className="info">
+        <span>Status</span>
+        <div className="info-data">
+          <span className="status">{currentTaskDetails.status}</span>
+        </div>
+      </div>
+      <div className="info">
+        <span>Description</span>
+        <div className="info-desc">
+          <p>{currentTaskDetails.description}</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default OverviewTab
+export default OverviewTab;
