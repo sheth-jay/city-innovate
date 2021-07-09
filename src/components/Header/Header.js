@@ -1,15 +1,18 @@
-
 import React, { useState } from 'react';
-import { Button, Checkbox, message, Col, Dropdown, Input, Menu, Row, Drawer, Form, Upload, Select, DatePicker, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Checkbox, message, Col, Dropdown,
+  Input, Menu, Row, Drawer, Form, Upload, Select, DatePicker, Space,
+} from 'antd';
+
 import './Header.scss';
 import PlusIcon from '../icons/PlusIcon';
 import DownIcon from '../icons/DownIcon';
 import SearchIcon from '../icons/SearchIcon';
 import { images } from '../../config/images';
 import * as actions from '../../appRedux/actions';
+import DropdownFilter from '../DropdownFilter/DropdownFilter';
 
 const solicitation = (props) => {
   return (
@@ -187,13 +190,7 @@ const getValues = (value, name) => {
 const handleSolicitationChange = checkedValues => {
   console.log(checkedValues);
 };
-const userDropdown = (
-  <Menu className="userProfile-dropdown">
-    <Menu.Item key="0">
-      <a href="">Logout</a>
-    </Menu.Item>
-  </Menu>
-);
+
 function onChange(date, dateString) {
   console.log(date, dateString);
 }
@@ -201,13 +198,11 @@ function onChange(date, dateString) {
 const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [filterItems, setFilterItems] = useState([]);
 
-  const getValues = (value, name) => {
+  const getValues = (value, name,) => {
     console.log(value, name);
   }
-  const handleSolicitationChange = checkedValues => {
-    console.log(checkedValues);
-  };
 
   const handleLogout = () => {
     dispatch(actions.logout())
@@ -231,6 +226,16 @@ const Header = () => {
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
+  const handleClearAllFilters = () => {};
+
+  const userDropdown = (
+    <Menu>
+      <Menu.Item key="0">
+        <Button type="link" onClick={handleLogout}>Logout</Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="HeaderStyles">
       <div className="wrapper">
@@ -267,7 +272,7 @@ const Header = () => {
                 <Col>
                   <div className="DropDownMenu">
                     <Dropdown overlay={() => solicitation({ getValues: getValues, name: 'Solicitation' })} trigger={['click']}>
-                      <Button type="link" className="ant-dropdown-link" onClick={() => handleSolicitationChange}>
+                      <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Solicitation <DownIcon />
                       </Button>
                     </Dropdown>

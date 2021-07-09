@@ -95,14 +95,16 @@ const { TabPane } = Tabs;
 function callback(key) {
   console.log(key);
 }
-const menu = (
-	<Menu className="drawer-menu">
-	  <Menu.Item key="0"><a href="">Archive</a></Menu.Item>
-	  <Menu.Item key="1">
-			<a href="">Allow Guest Contributors to edit</a>
-	  </Menu.Item>
-	</Menu>
-);
+const menu = (props) => {
+	return (
+		<Menu className="drawer-menu">
+			<Menu.Item key="0"><Button type="link">Archive</Button></Menu.Item>
+			<Menu.Item key="1">
+				<Button type="link">Allow Guest Contributors to edit</Button>
+			</Menu.Item>
+		</Menu>
+	);
+}
 class Taskmanagementtable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -132,7 +134,6 @@ class Taskmanagementtable extends React.Component {
 		this.setState({visible: false});
 	};
 
-	
 	render() {
 		const { selectedRowKeys, visible } = this.state;
 		const { currentTaskDetails } = this.props;
@@ -190,7 +191,7 @@ class Taskmanagementtable extends React.Component {
 							<div className="task-update-info">
 								<p>Mark Ford updated this task, 10:22 AM Tue, 22</p>
 								<p>Mark Ford commented, 9:45 AM Today</p>
-								<p>Task Assinged, 9:45 AM Today</p>
+								<p>Task Assigned, 9:45 AM Today</p>
 							</div>
 						</div>
 					</Spin>
@@ -200,4 +201,4 @@ class Taskmanagementtable extends React.Component {
 	}
 }
 
-export default Taskmanagementtable
+export default Taskmanagementtable;
