@@ -221,6 +221,94 @@ export default (state = INITIAL_STATE, action) => {
         markAsCompletedSource: null,
         markAsCompletedError: action.payload.response.data.errors,
       };
+    case actionTypes.GET_USERS_DROPDOWN_FILTER_LIST_LOADING:
+      return {
+        ...state,
+        getDropdownFilterListRequestState: RequestStates.loading,
+        getDropdownFilterListSource: action.meta && action.meta.source,
+        getDropdownFilterListError: null,
+      };
+    case actionTypes.GET_USERS_DROPDOWN_FILTER_LIST_SUCCESS:
+      return {
+        ...state,
+        getDropdownFilterListRequestState: RequestStates.success,
+        getDropdownFilterListSource: null,
+        getDropdownFilterListError: null,
+        usersFilterList: action.payload.data.data,
+      };
+    case actionTypes.GET_USERS_DROPDOWN_FILTER_LIST_ERROR:
+      return {
+        ...state,
+        getDropdownFilterListRequestState: RequestStates.error,
+        getDropdownFilterListSource: null,
+        getDropdownFilterListError: action.payload.response.data.errors,
+      };
+    case actionTypes.GET_LABELS_DROPDOWN_FILTER_LIST_LOADING:
+      return {
+        ...state,
+        getLabelsDropdownFilterListRequestState: RequestStates.loading,
+        getLabelsDropdownFilterListSource: action.meta && action.meta.source,
+        getLabelsDropdownFilterListError: null,
+      };
+    case actionTypes.GET_LABELS_DROPDOWN_FILTER_LIST_SUCCESS:
+      return {
+        ...state,
+        getLabelsDropdownFilterListRequestState: RequestStates.success,
+        getLabelsDropdownFilterListSource: null,
+        getLabelsDropdownFilterListError: null,
+        labelsFilterList: action.payload.data.data,
+      };
+    case actionTypes.GET_LABELS_DROPDOWN_FILTER_LIST_ERROR:
+      return {
+        ...state,
+        getLabelsDropdownFilterListRequestState: RequestStates.error,
+        getLabelsDropdownFilterListSource: null,
+        getLabelsDropdownFilterListError: action.payload.response.data.errors,
+      };
+    case actionTypes.GET_DOCUMENTS_DROPDOWN_FILTER_LIST_LOADING:
+      return {
+        ...state,
+        getDocumentsDropdownFilterListRequestState: RequestStates.loading,
+        getDocumentsDropdownFilterListSource: action.meta && action.meta.source,
+        getDocumentsDropdownFilterListError: null,
+      };
+    case actionTypes.GET_DOCUMENTS_DROPDOWN_FILTER_LIST_SUCCESS:
+      return {
+        ...state,
+        getDocumentsDropdownFilterListRequestState: RequestStates.success,
+        getDocumentsDropdownFilterListSource: null,
+        getDocumentsDropdownFilterListError: null,
+        documentsFilterList: action.payload.data.data,
+      };
+    case actionTypes.GET_DOCUMENTS_DROPDOWN_FILTER_LIST_ERROR:
+      return {
+        ...state,
+        getDocumentsDropdownFilterListRequestState: RequestStates.error,
+        getDocumentsDropdownFilterListSource: null,
+        getDocumentsDropdownFilterListError: action.payload.response.data.errors,
+      };
+    case actionTypes.GET_SOLICITATIONS_DROPDOWN_FILTER_LIST_LOADING:
+      return {
+        ...state,
+        getSolicitationsDropdownFilterListRequestState: RequestStates.loading,
+        getSolicitationsDropdownFilterListSource: action.meta && action.meta.source,
+        getSolicitationsDropdownFilterListError: null,
+      };
+    case actionTypes.GET_SOLICITATIONS_DROPDOWN_FILTER_LIST_SUCCESS:
+      return {
+        ...state,
+        getSolicitationsDropdownFilterListRequestState: RequestStates.success,
+        getSolicitationsDropdownFilterListSource: null,
+        getSolicitationsDropdownFilterListError: null,
+        solicitationsFilterList: action.payload.data.data,
+      };
+    case actionTypes.GET_SOLICITATIONS_DROPDOWN_FILTER_LIST_ERROR:
+      return {
+        ...state,
+        getSolicitationsDropdownFilterListRequestState: RequestStates.error,
+        getSolicitationsDropdownFilterListSource: null,
+        getSolicitationsDropdownFilterListError: action.payload.response.data.errors,
+      };
     default:
       return state
   }

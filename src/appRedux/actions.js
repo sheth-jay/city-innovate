@@ -74,3 +74,23 @@ export const markAsComplete = (taskId) => ({
     }
   })
 });
+
+export const getUsersDropdownFilterList = (name) => ({
+  type: actionTypes.GET_USERS_DROPDOWN_FILTER_LIST,
+  payload: api.get(`${name}`)
+});
+
+export const getLabelsDropdownFilterList = (name) => ({
+  type: actionTypes.GET_LABELS_DROPDOWN_FILTER_LIST,
+  payload: api.get(`${name}`)
+});
+
+export const getDocumentsDropdownFilterList = (name) => ({
+  type: actionTypes.GET_DOCUMENTS_DROPDOWN_FILTER_LIST,
+  payload: api.get(`${name}`)
+});
+
+export const getSolicitationsDropdownFilterList = (name) => ({
+  type: actionTypes.GET_SOLICITATIONS_DROPDOWN_FILTER_LIST,
+  payload: api.get(`${name}`)
+});

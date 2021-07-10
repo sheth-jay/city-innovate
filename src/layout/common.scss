@@ -23,6 +23,8 @@
 .DropDownBx {
   width: 271px;
   padding: 15px 15px 0;
+  max-height: 350px;
+  overflow: auto;
   .ant-input {
     border: 1px solid $gracolor;
     margin-bottom: 8px;

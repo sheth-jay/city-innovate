@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Checkbox, message, Col, Dropdown, Input, Menu, Row } from 'antd';
@@ -52,14 +52,16 @@ const category = (props) => {
   );
 };
 
-const document = (props) => {
+const status = (props) => {
   return (
     <Menu className="DropCategory">
       <div className="DropDownBx">
         <Input placeholder="Search" />
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
-          <Checkbox value="A">CDT STP RFO <span>2</span></Checkbox>
-          <Checkbox value="B">Attachment 1: Scope of  1: Scope of <span>5</span></Checkbox>
+          <Checkbox value="incomplete">Incomplete</Checkbox>
+          <Checkbox value="complete">Complete</Checkbox>
+          <Checkbox value="thisweek">This Week</Checkbox>
+          <Checkbox value="lastweek">Last Week</Checkbox>
         </Checkbox.Group>            
       </div>
       <div className="DropDownBx-footer">
@@ -70,72 +72,16 @@ const document = (props) => {
   );
 };
 
-const assignedto = (props) => {
+const thisweek = (props) => {
   return (
     <Menu className="DropCategory">
       <div className="DropDownBx">
         <Input placeholder="Search" />
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
-          <Checkbox value="A">
-            <div className="Assigned-group">
-              <div className="Assigned-group-img">
-                <img src={images.user1} alt=""/>
-              </div>
-              <div className="Assigned-group-detail">
-                <h4>Jessica Lopez</h4>
-                <p>jess@gmail.com</p>
-              </div>
-            </div>
-            <span>16</span>
-          </Checkbox>
-          <Checkbox value="B">
-            <div className="Assigned-group">
-              <div className="Assigned-group-img">
-                <img src={images.user1} alt=""/>
-              </div>
-              <div className="Assigned-group-detail">
-                <h4>James Twain</h4>
-                <p>camila@cityinnovat...</p>
-              </div>
-            </div>
-            <span>29</span>
-          </Checkbox>
-          <Checkbox value="C">
-            <div className="Assigned-group">
-              <div className="Assigned-group-img">
-                <img src={images.user1} alt=""/>
-              </div>
-              <div className="Assigned-group-detail">
-                <h4>Camila Gómez</h4>
-                <p>camila@cityinnovat...</p>
-              </div>
-            </div>
-            <span>1</span>
-          </Checkbox>
-          <Checkbox value="D">
-            <div className="Assigned-group">
-              <div className="Assigned-group-img">
-                <img src={images.user1} alt=""/>
-              </div>
-              <div className="Assigned-group-detail">
-                <h4>Britney Spurs</h4>
-                <p>britneyspurs@gmai.com</p>
-              </div>
-            </div>
-            <span>14</span>
-          </Checkbox>
-          <Checkbox value="E">
-            <div className="Assigned-group">
-              <div className="Assigned-group-img">
-                <img src={images.user1} alt=""/>
-              </div>
-              <div className="Assigned-group-detail">
-                <h4>Mark Ford</h4>
-                <p>mark@gmail.com</p>
-              </div>
-            </div>
-            <span>18</span>
-          </Checkbox>
+        <Checkbox value="incomplete">Incomplete</Checkbox>
+          <Checkbox value="today">today</Checkbox>
+          <Checkbox value="inprogress">In Progress</Checkbox>
+          <Checkbox value="archive">Archive</Checkbox>
         </Checkbox.Group>            
       </div>
       <div className="DropDownBx-footer">
@@ -145,21 +91,38 @@ const assignedto = (props) => {
     </Menu>
   );
 };
-const thisweek = (props) => {
+
+const dropdownFilter = (props) => {
   return (
     <Menu className="DropCategory">
       <div className="DropDownBx">
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
-          <Checkbox value="A">Over due <span>12</span></Checkbox>
-          <Checkbox value="B">Today <span>3</span></Checkbox>
-          <Checkbox value="C">This Week <span>5</span></Checkbox>
-          <Checkbox value="D">Next Week <span>14</span></Checkbox>
-          <Checkbox value="E">Later <span>9</span></Checkbox>
-          <Checkbox value="F">No due date <span>1</span></Checkbox>
+          {props.filterList?.map(filter => {
+            if (props.name === 'assignedto') {
+              return (
+                <Checkbox value={filter.id}>
+                  <div className="Assigned-group">
+                    <div className="Assigned-group-img">
+                      <img src={filter.avatar || images.user1} alt=""/>
+                    </div>
+                    <div className="Assigned-group-detail">
+                      <h4>{filter.full_name}</h4>
+                      <p>{filter.email}</p>
+                    </div>
+                  </div>
+                  <span>18</span>
+                </Checkbox>
+              )
+            } else {
+              return (
+                <Checkbox value={filter.id}>{props.name === 'documents' ? filter.title.split('.')[0] : filter.name}</Checkbox>
+              )
+            }
+          })}
         </Checkbox.Group>
       </div>
       <div className="DropDownBx-footer">
-        <Button type="primary">See Results</Button>
+        <Button type="primary" onClick={() => props.handleSeeResult}>See Results</Button>
         <Button type="default">Clear All</Button>
       </div>
     </Menu>
@@ -178,9 +141,21 @@ const Header = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [filterItems, setFilterItems] = useState([]);
+  const usersFilterList = useSelector(state => state.app.usersFilterList);
+  const labelsFilterList = useSelector(state => state.app.labelsFilterList);
+  const documentsFilterList = useSelector(state => state.app.documentsFilterList);
+  const solicitationsFilterList = useSelector(state => state.app.solicitationsFilterList);
+
+  useEffect(() => {
+    dispatch(actions.getUsersDropdownFilterList('users'));
+    dispatch(actions.getLabelsDropdownFilterList('labels'));
+    dispatch(actions.getSolicitationsDropdownFilterList('solicitations'));
+    dispatch(actions.getDocumentsDropdownFilterList('documents'));
+  }, []);
 
   const getValues = (value, name,) => {
-    console.log(value, name);
+    console.log('>>>', { [name]: value });
+    setFilterItems([{[name]: value}]);
   }
 
   const handleLogout = () => {
@@ -201,6 +176,10 @@ const Header = () => {
   const hideDrawer = () => {
     setVisible(false);
   };
+
+  const handleSeeResult = () => {
+    
+  }
 
   const handleClearAllFilters = () => {};
 
@@ -247,29 +226,42 @@ const Header = () => {
                 </Col>
                 <Col>
                   <div className="DropDownMenu">
-                    <Dropdown overlay={() => solicitation({ getValues: getValues, name: 'Solicitation' })} trigger={['click']}>
+                    <Dropdown
+                      overlay={() => dropdownFilter({
+                        getValues: getValues,
+                        name: 'Solicitation',
+                        filterList: solicitationsFilterList,
+                        handleSeeResult: handleSeeResult,
+                      })}
+                      trigger={['click']}
+                    >
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Solicitation <DownIcon /> 
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => category({ getValues: getValues, name: 'category' })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'labels', filterList: labelsFilterList })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Category <DownIcon />
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => document({ getValues: getValues, name: 'document' })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'documents', filterList: documentsFilterList })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Document <DownIcon /><span className="count">2</span>
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => assignedto({ getValues: getValues, name: 'assignedto' })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'assignedto', filterList: usersFilterList })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Assigned to <DownIcon />
+                      Assigned To <DownIcon />
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => thisweek({ getValues: getValues, name: 'thisweek' })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       This Week <DownIcon />
+                      </Button>
+                    </Dropdown>
+                    <Dropdown overlay={() => status({ getValues: getValues, name: 'thisweek' })} trigger={['click']}>
+                      <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                      Status <DownIcon />
                       </Button>
                     </Dropdown>
                     <Button type="link" className="ClearAll">Clear all</Button>
