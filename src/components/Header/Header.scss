@@ -68,6 +68,19 @@
         vertical-align: middle;
       }
     }
+    .count {
+      height: 16px;
+      width: 16px;
+      background-color: $primary;
+      color: $white;
+      font-size: 9px;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 100%;
+      line-height: 16px;
+      margin-left: 10px;
+      display: inline-block;
+    }
     .ClearAll {
       margin-left: 14px;
       font-weight: 400;
@@ -104,15 +117,14 @@
 }
 .task-form-drawer {
   .ant-drawer-body {
-    padding: 20px;
+    padding: 25px;
     .ant-form-item-label {
       text-align: left;
     }
   }
   .ButtonRight {
-    text-align: right;
     button {
-      margin-left: 10px;
+      margin-right: 20px;
     }
   }
 }

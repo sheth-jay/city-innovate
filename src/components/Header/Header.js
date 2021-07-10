@@ -249,7 +249,7 @@ const Header = () => {
                   <div className="DropDownMenu">
                     <Dropdown overlay={() => solicitation({ getValues: getValues, name: 'Solicitation' })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Solicitation <DownIcon />
+                      Solicitation <DownIcon /> 
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => category({ getValues: getValues, name: 'category' })} trigger={['click']}>
@@ -259,7 +259,7 @@ const Header = () => {
                     </Dropdown>
                     <Dropdown overlay={() => document({ getValues: getValues, name: 'document' })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Document <DownIcon />
+                      Document <DownIcon /><span className="count">2</span>
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => assignedto({ getValues: getValues, name: 'assignedto' })} trigger={['click']}>

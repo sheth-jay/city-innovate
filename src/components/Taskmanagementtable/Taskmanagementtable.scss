@@ -372,7 +372,8 @@
     @media #{$PhoneS} {
       margin: 0 3px;
     }
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
       opacity: 1;
     }
