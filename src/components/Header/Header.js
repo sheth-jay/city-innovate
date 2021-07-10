@@ -15,7 +15,6 @@ const status = (props) => {
   return (
     <Menu className="DropCategory">
       <div className="DropDownBx">
-        <Input placeholder="Search" />
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
           <Checkbox value="incomplete">Incomplete</Checkbox>
           <Checkbox value="complete">Complete</Checkbox>
@@ -25,7 +24,6 @@ const status = (props) => {
       </div>
       <div className="DropDownBx-footer">
         <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
-        <Button type="default">Clear All</Button>
       </div>
     </Menu>
   );
@@ -35,7 +33,6 @@ const thisweek = (props) => {
   return (
     <Menu className="DropCategory">
       <div className="DropDownBx">
-        <Input placeholder="Search" />
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
         <Checkbox value="incomplete">Incomplete</Checkbox>
           <Checkbox value="today">today</Checkbox>
@@ -49,7 +46,6 @@ const thisweek = (props) => {
       </div>
       <div className="DropDownBx-footer">
         <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
-        <Button type="default">Clear All</Button>
       </div>
     </Menu>
   );
@@ -63,7 +59,7 @@ const dropdownFilter = (props) => {
           {props.filterList?.map(filter => {
             if (props.name === 'assignedto') {
               return (
-                <Checkbox value={filter.id}>
+                <Checkbox value={filter.full_name}>
                   <div className="Assigned-group">
                     <div className="Assigned-group-img">
                       <img src={filter.avatar || images.user1} alt=""/>
@@ -78,7 +74,9 @@ const dropdownFilter = (props) => {
               )
             } else {
               return (
-                <Checkbox value={filter.name}>{props.name === 'documents' ? filter.title.split('.')[0] : filter.name}</Checkbox>
+                <Checkbox value={props.name === 'documents' ? filter.name.split('.')[0] : filter.name}>
+                  {props.name === 'documents' ? filter.name.split('.')[0] : filter.name}
+                </Checkbox>
               )
             }
           })}
@@ -86,7 +84,6 @@ const dropdownFilter = (props) => {
       </div>
       <div className="DropDownBx-footer">
         <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
-        <Button type="default">Clear All</Button>
       </div>
     </Menu>
   );
@@ -97,6 +94,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [filterItems, setFilterItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const usersFilterList = useSelector(state => state.app.usersFilterList);
   const labelsFilterList = useSelector(state => state.app.labelsFilterList);
   const documentsFilterList = useSelector(state => state.app.documentsFilterList);
@@ -111,12 +109,12 @@ const Header = () => {
   }, []);
 
   const getValues = (value, name,) => {
-    setFilterItems({[name]: value});
+    setFilterItems({[name]: value, filterName: name });
   };
 
   const handleSeeResult = () => {
-    console.log('>>>filterItems', filterItems.labels);
-    dispatch(actions.filterTaskList(filterItems));
+    console.log('>>>filterItems', filterItems);
+    dispatch(actions.filterTaskList(filterItems[filterItems.filterName], filterItems.filterName));
   };
 
 
@@ -140,6 +138,14 @@ const Header = () => {
   };
 
   const handleClearAllFilters = () => {};
+
+  const handleSearch = (e) => {
+   setSearchQuery(e.target.value)
+  };
+
+  useEffect(() => {
+    dispatch(actions.filterTaskByQuery(searchQuery, 'query'));
+  }, [searchQuery]);
 
   const userDropdown = (
     <Menu className="userProfile-dropdown">
@@ -179,7 +185,7 @@ const Header = () => {
               <Row gutter={16} align="middle" className="Search-drop-row">
                 <Col>
                   <div className="SearchBx">
-                    <Input placeholder="Search tasks..." prefix={<SearchIcon />} />
+                    <Input placeholder="Search tasks..." prefix={<SearchIcon />} onChange={handleSearch} />
                   </div>
                 </Col>
                 <Col>
@@ -187,42 +193,41 @@ const Header = () => {
                     <Dropdown
                       overlay={() => dropdownFilter({
                         getValues: getValues,
-                        name: 'Solicitation',
+                        name: 'solicitation',
                         filterList: solicitationsFilterList,
                         handleSeeResult: handleSeeResult,
                       })}
                       trigger={['click']}
                     >
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Solicitation <DownIcon /> 
+                      Solicitation <DownIcon />{filterItems['solicitation']?.length > 0 &&(<span className="count">{filterItems['solicitation'].length}</span>)}
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'labels', filterList: labelsFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'label', filterList: labelsFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Category <DownIcon />
+                      Category <DownIcon />{filterItems['label']?.length > 0 &&(<span className="count">{filterItems['label'].length}</span>)}
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'documents', filterList: documentsFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Document <DownIcon /><span className="count">2</span>
+                      Document <DownIcon />{filterItems['document']?.length > 0 &&(<span className="count">{filterItems['document'].length}</span>)}
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'assignedto', filterList: usersFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Assigned To <DownIcon />
+                      Assigned To <DownIcon />{filterItems['assignedto']?.length > 0 &&(<span className="count">{filterItems['assignedto'].length}</span>)}
                       </Button>
                     </Dropdown>
                     <Dropdown overlay={() => thisweek({ getValues: getValues, name: 'thisweek',  handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      This Week <DownIcon />
+                      This Week <DownIcon />{filterItems['thisweek']?.length > 0 &&(<span className="count">{filterItems['thisweek'].length}</span>)}
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => status({ getValues: getValues, name: 'thisweek',  handleSeeResult: handleSeeResult })} trigger={['click']}>
+                    <Dropdown overlay={() => status({ getValues: getValues, name: 'status',  handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                      Status <DownIcon />
+                      Status <DownIcon />{filterItems['status']?.length > 0 &&(<span className="count">{filterItems['status'].length}</span>)}
                       </Button>
                     </Dropdown>
-                    <Button type="link" className="ClearAll">Clear all</Button>
                   </div>
                 </Col>
               </Row>                        

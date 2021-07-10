@@ -39,9 +39,14 @@ export const getTaskList = (page = 1) => ({
   payload: api.get(`/tasks?page=${page}`),
 });
 
-export const filterTaskList = (filterItems) => ({
+export const filterTaskList = (filterItems, filterName) => ({
   type: actionTypes.FILTER_TASK_LIST,
-  payload: api.get(`/tasks?labels=[${filterItems.labels}]`),
+  payload: api.get(`/tasks?${filterName}=[${filterItems}]`),
+});
+
+export const filterTaskByQuery = (filterItems, filterName) => ({
+  type: actionTypes.FILTER_TASK_BY_QUERY,
+  payload: api.get(`/tasks?${filterName}=${filterItems}`),
 });
 
 export const getCurrentTaskDetails = (taskId) => ({
@@ -51,18 +56,26 @@ export const getCurrentTaskDetails = (taskId) => ({
 
 export const createTask = (values) => {
   const formData = new FormData();
-  formData.append('file', values.document.fileList[0].originFileObj);
+    values.labels.forEach(element => {
+    formData.append('task[label_ids][]', element);
+  });
+  values.assigned_to.forEach(element => {
+  formData.append('task[user_ids][]', element);
+  });
+  Array.from(values.fileList.files).forEach(file => {
+  formData.append('task[documents_attributes][]',file );
+  });
+  
+  formData.append('task[title]', values.title);
+  formData.append('task[description]', values.description);
+  formData.append('task[due_date]', values.due_date);
+  
   return {
   type: actionTypes.CREATE_TASK,
-  payload: api.post('/tasks', {
-    task: {
-      title: values.title,
-      description: values.description,
-      label_ids: values.labels,
-      document: formData,
-      user_ids: values.assigned_to,
-      due_date: values.due_date,
-    }
+  payload: api.post('/tasks', formData,{
+  headers: {
+  'Content-Type': 'multipart/form-data'
+  }
   }),
 }};
 
@@ -76,12 +89,10 @@ export const getUsers = () => ({
   payload: api.get('/users'),
 });
 
-export const markAsComplete = (taskId) => ({
+export const markAsComplete = (taskId, status) => ({
   type: actionTypes.MARK_AS_COMPLETED,
   payload: api.patch(`/tasks/${taskId}/status`, {
-    task: {
-      status: 'completed'
-    }
+    task: { status }
   })
 });
 

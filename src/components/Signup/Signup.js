@@ -28,8 +28,8 @@ const Signup = () => {
   }
   
   const onFinish = values => {
-    let pic = fileList.file
-    dispatch(actions.signup(values.firstName, values.lastName, values.emailAddress, values.password, values.confirmPassword,pic))
+    const pic = fileList.file
+    dispatch(actions.signup(values.firstName, values.lastName, values.emailAddress, values.password, values.confirmPassword, pic))
       .then(() => {
         history.push('/login');
         message.success('you have signed up successfully, please login to continue');

@@ -35,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loginRequestState: RequestStates.success,
         loginError: null,
-        userDetails: action.payload.data.data,
+        userDetails: action.payload.data.data || [],
       };
     case actionTypes.LOGIN_ERROR:
       return {
@@ -116,7 +116,7 @@ export default (state = INITIAL_STATE, action) => {
         getTaskListSource: null,
         getTaskListError: null,
         taskList: [
-          ...action.payload.data.data,
+          ...action.payload.data.data || [],
         ],
         taskListMetadata: {
           ...state.taskListMetadata,
@@ -157,6 +157,34 @@ export default (state = INITIAL_STATE, action) => {
         filterTaskListRequestState: RequestStates.error,
         filterTaskListSource: null,
         filterTaskListError: action.payload.response.data.errors,
+      };
+    case actionTypes.FILTER_TASK_BY_QUERY_LOADING:
+      return {
+        ...state,
+        filterTaskByQueryRequestState: RequestStates.loading,
+        filterTaskByQuerySource: action.meta && action.meta.source,
+        filterTaskByQueryError: null,
+      };
+    case actionTypes.FILTER_TASK_BY_QUERY_SUCCESS:
+      return {
+        ...state,
+        filterTaskByQueryRequestState: RequestStates.success,
+        filterTaskByQuerySource: null,
+        filterTaskByQueryError: null,
+        taskList: [
+          ...action.payload.data.data,
+        ],
+        taskListMetadata: {
+          ...state.taskListMetadata,
+          ...action.payload.data.meta_key,
+        }
+      };
+    case actionTypes.FILTER_TASK_BY_QUERY_ERROR:
+      return {
+        ...state,
+        filterTaskByQueryRequestState: RequestStates.error,
+        filterTaskByQuerySource: null,
+        filterTaskByQueryError: action.payload.response.data.errors,
       };
       case actionTypes.GET_CURRENT_TASK_DETAILS_LOADING:
       return {
@@ -215,7 +243,7 @@ export default (state = INITIAL_STATE, action) => {
         getUsersRequestState: RequestStates.success,
         getUsersSource: null,
         getUsersError: null,
-        users: action.payload.data.data,
+        users: action.payload.data.data || [],
       };
     case actionTypes.GET_USERS_ERROR:
       return {

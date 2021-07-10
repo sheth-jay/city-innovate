@@ -10,26 +10,9 @@ import { Button, Input, Drawer, Form, Upload, Select, DatePicker, Space, message
 import * as actions from '../../appRedux/actions';
 import RequestState from '../../utils/request-states';
 
-// const props = {
-//   name: 'file',
-//   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-//   headers: {
-//     authorization: 'authorization-text',
-//   },
-//   onChange(info) {
-//     if (info.file.status !== 'uploading') {
-//       console.log(info.file, info.fileList);
-//     }
-//     if (info.file.status === 'done') {
-//       message.success(`${info.file.name} file uploaded successfully`);
-//     } else if (info.file.status === 'error') {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   },
-// };
-
 const CreateTask = ({ visible, onClose }) => {
   const [descriptionValue, setDescriptionValue] = useState('');
+  const [fileList, setFileList] = useState([]);
   const dispatch = useDispatch();
   const users = useSelector(state => state.app.users || []);
   const currentUserDetails = useSelector(state => state.app.userDetails);
@@ -37,6 +20,7 @@ const CreateTask = ({ visible, onClose }) => {
   const { Option } = Select;
   const today = moment();
   const dateFormat = "YYYY-MM-DD";
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(actions.getTaskLabels());
@@ -47,14 +31,21 @@ const CreateTask = ({ visible, onClose }) => {
     console.log(value);
   };
 
+  const uploadDocuments = (event) => {
+    event.preventDefault();
+    const files = event.target.files;
+    setFileList({ files: files });
+  }
+
   const handleDueDateChange = (date, dateString) => {
     console.log(date, dateString);
   };
 
   const onFinish = (values) => {
-    dispatch(actions.createTask({ ...values, DueDate: moment(values.DueDate).format(dateFormat) }))
+    dispatch(actions.createTask({ ...values, DueDate: moment(values.DueDate).format(dateFormat), fileList }))
     .then(() => {
       message.success('you have successfully created a new task');
+      form.resetFields();
       onClose();
     })
     .catch((err) => {
@@ -79,6 +70,7 @@ const CreateTask = ({ visible, onClose }) => {
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           onFinish={onFinish}
+          form={form}
         >
           <Form.Item
             label="Name"
@@ -100,9 +92,7 @@ const CreateTask = ({ visible, onClose }) => {
             name="document"
             rules={[{ required: true, message: 'Please upload Document!' }]}
           >
-            <Upload accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
+            <Input id="photo-upload" type="file" onChange={uploadDocuments} accept=".docx"/>
           </Form.Item>
           <Form.Item
             label="Labels"
@@ -138,7 +128,7 @@ const CreateTask = ({ visible, onClose }) => {
           </Form.Item>
           <div className="ButtonRight">
             <Button type="primary" htmlType="submit">Create Task</Button>
-            <Button>Clear</Button>
+            <Button onClick={() => form.resetFields()}>Clear</Button>
           </div>
         </Form>
       </div>

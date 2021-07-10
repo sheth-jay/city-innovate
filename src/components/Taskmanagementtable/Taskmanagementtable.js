@@ -53,8 +53,9 @@ const columns = [
 		// sorter: (a, b) => a.duedate - b.duedate,
 	},
 ];
+
 function dataTableChange(sorter) {
-	console.log('params', sorter);
+	console.log('>>>params', sorter);
 }
 
 
@@ -65,7 +66,7 @@ const data = (taskList, showDrawer) => {
 			key: task.id,
 			taskname: (
 				<div className="TaskName">
-					<p>{task.title} <span className="tag">NEW</span></p>
+					<p>{task.title}</p>
 					<Button type="link" onClick={() => showDrawer(task)}>See Details <RightIcon /></Button>
 				</div>
 			),
@@ -177,7 +178,7 @@ class Taskmanagementtable extends React.Component {
 					</Spin>
 					{selectedRowKeys.length > 0 && ( 
 						<div className="selected-task-popover">
-							<span>2 tasks selected</span>
+							<span>{selectedRowKeys.length} tasks selected</span>
 							<div className="action-wrap">
 								<Button><ChecklistIcon /></Button>
 								<Button><UserIcon /></Button>
