@@ -142,6 +142,10 @@ class Taskmanagementtable extends React.Component {
 		this.setState({visible: false});
 	};
 
+	handleMarkAsComplete = () => {
+		this.props.markAsComplete(this.props.currentTaskDetails.id);
+	}
+
 	render() {
 		const { selectedRowKeys, visible } = this.state;
 		const { currentTaskDetails } = this.props;
@@ -161,17 +165,19 @@ class Taskmanagementtable extends React.Component {
               <Pagination defaultCurrent={1} total={total_count} current={current_page} onChange={this.props.changePage}/> 
             </div>
 					</Spin>
-					<div className="selected-task-popover">
-						<span>2 tasks selected</span>
-						<div className="action-wrap">
-							<Button><ChecklistIcon /></Button>
-							<Button><UserIcon /></Button>
-							<Button><DateIcon/></Button>
-							<Button><DeleteIcon /></Button>
-							<span>|</span>
-							<Button className="close-btn"><CloseIcon /></Button>
+					{selectedRowKeys.length > 0 && ( 
+						<div className="selected-task-popover">
+							<span>2 tasks selected</span>
+							<div className="action-wrap">
+								<Button><ChecklistIcon /></Button>
+								<Button><UserIcon /></Button>
+								<Button><DateIcon/></Button>
+								<Button><DeleteIcon /></Button>
+								<span>|</span>
+								<Button className="close-btn"><CloseIcon /></Button>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 
 				<Drawer
@@ -183,7 +189,7 @@ class Taskmanagementtable extends React.Component {
 				>
 					<Spin spinning={this.props.loading}>
 						<div className="drawer_header">
-							<Checkbox onChange={onChange}>Mark as Complete</Checkbox>
+							<Checkbox onChange={this.handleMarkAsComplete} disabled={currentTaskDetails.status === 'completed'}>Mark as Complete</Checkbox>
 							<div className="right_header_wrap">
 								<a href=""><img src={images.Attachment} /></a>
 								<Dropdown overlay={menu} trigger={['click']}>
@@ -211,8 +217,8 @@ class Taskmanagementtable extends React.Component {
 						</div>
 						<div className="drawer-footer">
 							<div className="profile-info">
-								<img src={images.avtarFooter} />
-								<h2>Jordy Alba created this task</h2>
+								<img src={currentTaskDetails.avtar} />
+								<h2>{`${currentTaskDetails.creator} created this task`}</h2>
 								<span>9:45 AM Today</span>
 							</div>
 							<div className="task-update-info">

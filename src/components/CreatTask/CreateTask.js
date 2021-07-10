@@ -35,6 +35,7 @@ const CreateTask = ({ visible, onClose }) => {
   const currentUserDetails = useSelector(state => state.app.userDetails);
   const taskLabels = useSelector(state => state.app.taskLabels || []);
   const { Option } = Select;
+  const today = moment();
   const dateFormat = "YYYY-MM-DD";
 
   useEffect(() => {
@@ -131,8 +132,7 @@ const CreateTask = ({ visible, onClose }) => {
           >
             <DatePicker
               onChange={handleDueDateChange}
-              defaultValue={moment("2015-01-01", dateFormat)}
-              format={dateFormat}
+              disabledDate={(current => current < moment().subtract(1, 'days'))}
             />
           </Form.Item>
           <div className="ButtonRight">

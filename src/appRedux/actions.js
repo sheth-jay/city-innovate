@@ -65,3 +65,12 @@ export const getUsers = () => ({
   type: actionTypes.GET_USERS,
   payload: api.get('/users'),
 });
+
+export const markAsComplete = (taskId) => ({
+  type: actionTypes.MARK_AS_COMPLETED,
+  payload: api.patch(`/tasks/${taskId}/status`, {
+    task: {
+      status: 'completed'
+    }
+  })
+});

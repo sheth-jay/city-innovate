@@ -196,6 +196,31 @@ export default (state = INITIAL_STATE, action) => {
         getUsersSource: null,
         getUsersError: action.payload.response.data.errors,
       };
+    case actionTypes.MARK_AS_COMPLETED_LOADING:
+      return {
+        ...state,
+        markAsCompletedRequestState: RequestStates.loading,
+        markAsCompletedSource: action.meta && action.meta.source,
+        markAsCompletedError: null,
+      };
+    case actionTypes.MARK_AS_COMPLETED_SUCCESS:
+      return {
+        ...state,
+        markAsCompletedRequestState: RequestStates.success,
+        markAsCompletedSource: null,
+        markAsCompletedError: null,
+        currentTaskDetails: {
+          ...state.currentTaskDetails,
+          status: "completed",
+        },
+      };
+    case actionTypes.MARK_AS_COMPLETED_ERROR:
+      return {
+        ...state,
+        markAsCompletedRequestState: RequestStates.error,
+        markAsCompletedSource: null,
+        markAsCompletedError: action.payload.response.data.errors,
+      };
     default:
       return state
   }

@@ -31,6 +31,12 @@ const Taskmanagementtablecontainer = () => {
       .catch((err) => message.error(err.response.data.errors))
   };
 
+  const markAsComplete = (taskId) => {
+    dispatch(actions.markAsComplete(taskId))
+      .then(() => message.success('Marked task as completed'))
+      .catch((err) => message.error(err.response.data.errors))
+  }
+
   return (
     <Taskmanagementtable
       taskList={taskList}
@@ -39,6 +45,7 @@ const Taskmanagementtablecontainer = () => {
       loading={loading}
       changePage={changePage}
       taskListMetadata={taskListMetadata}
+      markAsComplete={markAsComplete}
     />
   )
 };
