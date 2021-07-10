@@ -90,28 +90,25 @@ const OverviewTab = ({ currentTaskDetails }) => {
         <span>Assignee</span>
         <div className="info-data">
           <div className="assignee-info">
-            {currentTaskDetails.assignees.map((assignee) => {
+            {currentTaskDetails?.assignees?.map((assignee) => {
               return (
-                <>
+                <div className="delete-opt">
                   <img src={assignee.avatar} alt={assignee.avatar}/>
                   <span>{assignee.full_name}</span>
-                </>
+                  <a href=""><CloseCircleFilled /></a>
+                </div>
               )
             })}
-          </div>
-          <div className="assignee-info">
-            <div className="delete-opt">
-              <img src={images.assignee1}/>
-              <span>Mark Ford</span>
-              <a href=""><CloseCircleFilled /></a>
-            </div>
             <Dropdown overlay={addMember} trigger={['click']}>
               <a href="" className="addicon" onClick={e => e.preventDefault()}><AddIcon /></a>
             </Dropdown>
           </div>
           <div className="assignee-info">
-            <img src={images.assignee1}/>
-            <span>James Twain</span>
+            <div className="delete-opt">
+              <img src={images.assignee1}/>
+              <span>Mark Ford</span>
+              
+            </div>
           </div>
         </div>
       </div>
@@ -149,7 +146,7 @@ const OverviewTab = ({ currentTaskDetails }) => {
       <div className="info">
         <span>Description</span>
         <div className="info-desc">
-          <p>{currentTaskDetails.description}</p>
+          <p dangerouslySetInnerHTML={{__html: currentTaskDetails.description}}></p>
         </div>
       </div>
     </div>

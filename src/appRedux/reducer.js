@@ -116,7 +116,6 @@ export default (state = INITIAL_STATE, action) => {
         getTaskListSource: null,
         getTaskListError: null,
         taskList: [
-          ...state.taskList,
           ...action.payload.data.data,
         ],
         taskListMetadata: {

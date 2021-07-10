@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from 'antd/lib/avatar/avatar';
 import { CloseCircleFilled } from '@ant-design/icons';
-import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown, Spin } from 'antd';
+import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown, Spin, Pagination } from 'antd';
 
 import './Taskmanagementtable.scss';
 import AddIcon from '../icons/AddIcon';
@@ -133,11 +133,15 @@ class Taskmanagementtable extends React.Component {
 			selectedRowKeys,
 			onChange: this.onSelectChange,
 		};
-		
+		const {total_count,current_page} = this.props.taskListMetadata;
+
 		return (
 			<div className="TaskmanagementtableStyles">
 				<Spin spinning={this.props.loading}>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} />
+					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} pagination={false} />
+					<div style={{ float: 'right', marginTop: '20px'}}>
+						<Pagination defaultCurrent={1} total={total_count} current={current_page} onChange={this.props.changePage}/> 
+					</div>
 				</Spin>
 				<Drawer
 					placement="right"

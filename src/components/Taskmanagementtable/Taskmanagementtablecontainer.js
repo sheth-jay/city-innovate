@@ -16,15 +16,14 @@ const Taskmanagementtablecontainer = () => {
     || state.app.getTaskListRequestState === RequestStates.loading);
     
   console.log('>>taskList', taskList);
-  useEffect(() => {
-    if (taskListMetadata.total_pages > taskListMetadata.current_page) {
-      setGetNextPageData(true);
-    };
-  }, [taskListMetadata]);
+
+  const changePage = (page) =>{
+    dispatch(actions.getTaskList(page));
+  }
 
   useEffect(() => {
-    dispatch(actions.getTaskList(taskListMetadata.next_page || 1));
-  }, [getNextPageData]);
+    dispatch(actions.getTaskList(1));
+  }, []);
 
   const getCurrentTaskDetails = (taskId) => {
     dispatch(actions.getCurrentTaskDetails(taskId))
@@ -38,6 +37,8 @@ const Taskmanagementtablecontainer = () => {
       getCurrentTaskDetails={getCurrentTaskDetails}
       currentTaskDetails={currentTaskDetails}
       loading={loading}
+      changePage={changePage}
+      taskListMetadata={taskListMetadata}
     />
   )
 };
