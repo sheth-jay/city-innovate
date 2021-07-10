@@ -9,6 +9,11 @@ import RightIcon from '../icons/RightIcon';
 import { images } from '../../config/images';
 import OverviewIcon from '../icons/OverviewIcon';
 import ActivityIcon from '../icons/ActivityIcon';
+import ChecklistIcon from '../icons/ChecklistIcon';
+import UserIcon from '../icons/UserIcon';
+import DateIcon from '../icons/DateIcon';
+import DeleteIcon from '../icons/DeleteIcon';
+import CloseIcon from '../icons/CloseIcon';
 import CalenderIcon from '../icons/CalenderIcon';
 import { getFormattedDateAndClass } from '../../utils';
 import OverviewTab from './../OverviewTab/OverviewTab';
@@ -17,30 +22,41 @@ import ActivityTab from './../ActivityTab/ActivityTab';
 const columns = [
 	{
 		title: 'Task name',
-		dataIndex: 'taskname',    
-		sorter: (a, b) => a.taskname - b.taskname,
+		dataIndex: 'taskname',
+		key: 'taskname',
+		sorter: (a, b) => a.taskname.length - b.taskname.length,
+		sortDirections: ['descend'],
 	},
 	{
 		title: 'Document',
 		dataIndex: 'document',
-		sorter: (a, b) => a.document - b.document,
+		// sorter: (a, b) => a.document.length - b.document.length,
 	},
 	{
+		title: 'Section',
+		dataIndex: 'section',
+		// sorter: (a, b) => a.section.length - b.section.length,
+	},
+  {
 		title: 'Labels',
 		dataIndex: 'labels',
-		sorter: (a, b) => a.labels - b.labels,
+		// sorter: (a, b) => a.labels.length - b.labels.length,
 	},
 	{
 		title: 'Assigned to',
 		dataIndex: 'assigned',
-		sorter: (a, b) => a.assigned - b.assigned,
+		// sorter: (a, b) => a.assigned.length - b.assigned.length,
 	},
 	{
 		title: 'Due Date',
 		dataIndex: 'duedate',
-		sorter: (a, b) => a.duedate - b.duedate,
+		// sorter: (a, b) => a.duedate - b.duedate,
 	},
 ];
+function dataTableChange(sorter) {
+	console.log('params', sorter);
+}
+
 
 const data = (taskList, showDrawer) => {
 	return taskList && taskList.map(task => {
@@ -105,7 +121,7 @@ class Taskmanagementtable extends React.Component {
 		selectedRowKeys: [],
 		visible: false,
 	};
-
+	
 	start = () => {
 		setTimeout(() => {
 			this.setState({
@@ -137,12 +153,27 @@ class Taskmanagementtable extends React.Component {
 
 		return (
 			<div className="TaskmanagementtableStyles">
-				<Spin spinning={this.props.loading}>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} pagination={false} />
-					<div style={{ float: 'right', marginTop: '20px'}}>
-						<Pagination defaultCurrent={1} total={total_count} current={current_page} onChange={this.props.changePage}/> 
+
+				<div className="dataTable-wrap">
+					<Spin spinning={this.props.loading}>
+						<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} pagination={false}/>
+            <div style={{ float: 'right', marginTop: '20px'}}>
+              <Pagination defaultCurrent={1} total={total_count} current={current_page} onChange={this.props.changePage}/> 
+            </div>
+					</Spin>
+					<div className="selected-task-popover">
+						<span>2 tasks selected</span>
+						<div className="action-wrap">
+							<Button><ChecklistIcon /></Button>
+							<Button><UserIcon /></Button>
+							<Button><DateIcon/></Button>
+							<Button><DeleteIcon /></Button>
+							<span>|</span>
+							<Button className="close-btn"><CloseIcon /></Button>
+						</div>
 					</div>
-				</Spin>
+				</div>
+
 				<Drawer
 					placement="right"
 					closable={false}

@@ -205,7 +205,7 @@ const Header = () => {
   const handleClearAllFilters = () => {};
 
   const userDropdown = (
-    <Menu>
+    <Menu className="userProfile-dropdown">
       <Menu.Item key="0">
         <Button type="link" onClick={handleLogout}>Logout</Button>
       </Menu.Item>
@@ -229,7 +229,7 @@ const Header = () => {
             </Col>
             <Col xs={6} md={8}>
               <div className="HeaderRight">
-                <Dropdown overlay={userDropdown} trigger={['click']}>
+                <Dropdown overlay={userDropdown} trigger={['click']} placement="bottomRight">
                   <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={images.user1} alt=""/></Button>
                 </Dropdown>
               </div>

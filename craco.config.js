@@ -13,7 +13,7 @@ module.exports = {
               '@text-color': '#173851',
               '@primary-color': '#0064FF',
 
-              '@btn-font-weight': 'normal',
+              '@btn-font-weight': '600',
               '@btn-border-radius-base': '4px',
               '@btn-height-base': '34px',
 
