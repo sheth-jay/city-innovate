@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, message, Spin , Upload} from 'antd';
-
+import { EditOutlined } from '@ant-design/icons';
 import './Signup.scss';
 import * as actions from '../../appRedux/actions';
 import RequestState from '../../utils/request-states';
@@ -58,7 +58,8 @@ const Signup = () => {
 
         <label htmlFor="photo-upload" className="custom-file-upload fas">
           <div className="img-wrap img-upload" >
-            <img for="photo-upload" src={fileList.imagePreviewUrl}/>
+            <img for="photo-upload" src={fileList.imagePreviewUrl} />
+            <span className="edit-icon"><EditOutlined /></span>
           </div>
           <Input id="photo-upload" type="file" onChange={photoUpload}/> 
         </label>
