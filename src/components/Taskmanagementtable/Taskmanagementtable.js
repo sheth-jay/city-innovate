@@ -120,8 +120,15 @@ class Taskmanagementtable extends React.Component {
 	state = {
 		selectedRowKeys: [],
 		visible: false,
+		taskDetails:{}
 	};
-	
+
+	componentWillReceiveProps(nextProps){
+		if(nextProps.currentTaskDetails.comments!==this.state.taskDetails.comments){
+			this.setState({taskDetails:nextProps.currentTaskDetails})
+		}
+	}
+
 	start = () => {
 		setTimeout(() => {
 			this.setState({
@@ -135,7 +142,7 @@ class Taskmanagementtable extends React.Component {
 	};
 
 	showDrawer = (task) => {
-		this.setState({visible: true});
+		this.setState({visible: true,taskDetails:task});
 		this.props.getCurrentTaskDetails(task.id);
 	};
 	onClose = () => {
@@ -144,6 +151,9 @@ class Taskmanagementtable extends React.Component {
 
 	handleMarkAsComplete = () => {
 		this.props.markAsComplete(this.props.currentTaskDetails.id);
+	}
+	updateTask = ()=>{
+		this.props.getCurrentTaskDetails(this.state.taskDetails.id);
 	}
 
 	render() {
@@ -211,7 +221,7 @@ class Taskmanagementtable extends React.Component {
 									<OverviewTab currentTaskDetails={currentTaskDetails} />
 								</TabPane>
 								<TabPane tab={<span>Activity <ActivityIcon /></span>} key="2">
-									<ActivityTab />
+									<ActivityTab taskDetails={this.state.taskDetails} updateTask={this.updateTask}/>
 								</TabPane>
 							</Tabs>
 						</div>

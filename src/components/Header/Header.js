@@ -9,48 +9,7 @@ import DownIcon from '../icons/DownIcon';
 import SearchIcon from '../icons/SearchIcon';
 import { images } from '../../config/images';
 import * as actions from '../../appRedux/actions';
-import DropdownFilter from '../DropdownFilter/DropdownFilter';
 import CreateTask from '../CreatTask/CreateTask';
-
-const solicitation = (props) => {
-  return (
-    <Menu className="DropCategory">
-      <div className="DropDownBx">
-        <Input placeholder="Search" />
-        <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
-          <Checkbox value="A">Checklist <span>12</span></Checkbox>
-          <Checkbox value="B">Comment <span>32</span></Checkbox>
-          <Checkbox value="C">Decision Log <span>24</span></Checkbox>
-          <Checkbox value="D">Smart Text <span>8</span></Checkbox>
-          <Checkbox value="E">Task <span>4</span></Checkbox>
-          <Checkbox value="F">Variation <span>48</span></Checkbox>
-        </Checkbox.Group>
-      </div>
-      <div className="DropDownBx-footer">
-        <Button type="primary">See Results</Button>
-        <Button type="default">Clear All</Button>
-      </div>
-    </Menu>
-  );
-};
-
-const category = (props) => {
-  return (
-    <Menu className="DropCategory">
-      <div className="DropDownBx">
-        <Input placeholder="Search" />
-        <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
-          <Checkbox value="A">CDT STP RFO <span>2</span></Checkbox>
-          <Checkbox value="B">Attachment 1: Scope of  1: Scope of <span>5</span></Checkbox>
-        </Checkbox.Group>            
-      </div>
-      <div className="DropDownBx-footer">
-        <Button type="primary">See Results</Button>
-        <Button type="default">Clear All</Button>
-      </div>
-    </Menu>
-  );
-};
 
 const status = (props) => {
   return (
@@ -60,12 +19,12 @@ const status = (props) => {
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
           <Checkbox value="incomplete">Incomplete</Checkbox>
           <Checkbox value="complete">Complete</Checkbox>
-          <Checkbox value="thisweek">This Week</Checkbox>
-          <Checkbox value="lastweek">Last Week</Checkbox>
+          <Checkbox value="inprogress">In Progress</Checkbox>
+          <Checkbox value="archive">Archive</Checkbox>
         </Checkbox.Group>            
       </div>
       <div className="DropDownBx-footer">
-        <Button type="primary">See Results</Button>
+        <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
         <Button type="default">Clear All</Button>
       </div>
     </Menu>
@@ -80,12 +39,16 @@ const thisweek = (props) => {
         <Checkbox.Group style={{ width: '100%' }} onChange={(value) => props.getValues(value, props.name)}>
         <Checkbox value="incomplete">Incomplete</Checkbox>
           <Checkbox value="today">today</Checkbox>
-          <Checkbox value="inprogress">In Progress</Checkbox>
-          <Checkbox value="archive">Archive</Checkbox>
+          <Checkbox value="thisweek">This Week</Checkbox>
+          <Checkbox value="lastweek">Last Week</Checkbox>
+          <Checkbox value="nextweek">Next Week</Checkbox>
+          <Checkbox value="upcoming">Upcoming Week</Checkbox>
+          <Checkbox value="overdue">Over Due</Checkbox>
+          <Checkbox value="nooverdue">No Over Due</Checkbox>
         </Checkbox.Group>            
       </div>
       <div className="DropDownBx-footer">
-        <Button type="primary">See Results</Button>
+        <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
         <Button type="default">Clear All</Button>
       </div>
     </Menu>
@@ -115,25 +78,18 @@ const dropdownFilter = (props) => {
               )
             } else {
               return (
-                <Checkbox value={filter.id}>{props.name === 'documents' ? filter.title.split('.')[0] : filter.name}</Checkbox>
+                <Checkbox value={filter.name}>{props.name === 'documents' ? filter.title.split('.')[0] : filter.name}</Checkbox>
               )
             }
           })}
         </Checkbox.Group>
       </div>
       <div className="DropDownBx-footer">
-        <Button type="primary" onClick={() => props.handleSeeResult}>See Results</Button>
+        <Button type="primary" onClick={props.handleSeeResult}>See Results</Button>
         <Button type="default">Clear All</Button>
       </div>
     </Menu>
   );
-};
-
-const getValues = (value, name) => {
-  console.log(value, name);
-}
-const handleSolicitationChange = checkedValues => {
-  console.log(checkedValues);
 };
 
 const Header = () => {
@@ -145,6 +101,7 @@ const Header = () => {
   const labelsFilterList = useSelector(state => state.app.labelsFilterList);
   const documentsFilterList = useSelector(state => state.app.documentsFilterList);
   const solicitationsFilterList = useSelector(state => state.app.solicitationsFilterList);
+  const currentUserDetails = useSelector(state => state.app.userDetails);
 
   useEffect(() => {
     dispatch(actions.getUsersDropdownFilterList('users'));
@@ -154,9 +111,14 @@ const Header = () => {
   }, []);
 
   const getValues = (value, name,) => {
-    console.log('>>>', { [name]: value });
-    setFilterItems([{[name]: value}]);
-  }
+    setFilterItems({[name]: value});
+  };
+
+  const handleSeeResult = () => {
+    console.log('>>>filterItems', filterItems.labels);
+    dispatch(actions.filterTaskList(filterItems));
+  };
+
 
   const handleLogout = () => {
     dispatch(actions.logout())
@@ -177,10 +139,6 @@ const Header = () => {
     setVisible(false);
   };
 
-  const handleSeeResult = () => {
-    
-  }
-
   const handleClearAllFilters = () => {};
 
   const userDropdown = (
@@ -198,7 +156,7 @@ const Header = () => {
           <Row gutter={30} align="middle">
             <Col xs={5} md={8}>
               <div className="Logoimage">
-                <Button type="link"><img src={images.logo} alt=""/></Button>
+                {/* <Button type="link"><img src={images.logo} alt=""/></Button> */}
               </div>
             </Col>
             <Col xs={13} md={8}>
@@ -209,7 +167,7 @@ const Header = () => {
             <Col xs={6} md={8}>
               <div className="HeaderRight">
                 <Dropdown overlay={userDropdown} trigger={['click']} placement="bottomRight">
-                  <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={images.user1} alt=""/></Button>
+                  <Button type="link" onClick={e => e.preventDefault()} className="UserBorder"><img src={currentUserDetails.avatar || images.user1} alt="" width='50'/></Button>
                 </Dropdown>
               </div>
             </Col>
@@ -239,27 +197,27 @@ const Header = () => {
                       Solicitation <DownIcon /> 
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'labels', filterList: labelsFilterList })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'labels', filterList: labelsFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Category <DownIcon />
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'documents', filterList: documentsFilterList })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'documents', filterList: documentsFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Document <DownIcon /><span className="count">2</span>
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'assignedto', filterList: usersFilterList })} trigger={['click']}>
+                    <Dropdown overlay={() => dropdownFilter({ getValues: getValues, name: 'assignedto', filterList: usersFilterList, handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Assigned To <DownIcon />
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => thisweek({ getValues: getValues, name: 'thisweek' })} trigger={['click']}>
+                    <Dropdown overlay={() => thisweek({ getValues: getValues, name: 'thisweek',  handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       This Week <DownIcon />
                       </Button>
                     </Dropdown>
-                    <Dropdown overlay={() => status({ getValues: getValues, name: 'thisweek' })} trigger={['click']}>
+                    <Dropdown overlay={() => status({ getValues: getValues, name: 'thisweek',  handleSeeResult: handleSeeResult })} trigger={['click']}>
                       <Button type="link" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                       Status <DownIcon />
                       </Button>

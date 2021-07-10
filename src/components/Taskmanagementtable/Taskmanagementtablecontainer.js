@@ -8,7 +8,6 @@ import Taskmanagementtable from './Taskmanagementtable';
 
 const Taskmanagementtablecontainer = () => {
   const dispatch = useDispatch();
-  const [getNextPageData, setGetNextPageData] = useState(false);
   const taskList = useSelector(state => state.app.taskList && state.app.taskList);
   const taskListMetadata = useSelector(state => state.app.taskList && state.app.taskListMetadata);
   const currentTaskDetails = useSelector(state => state.app.currentTaskDetails);

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ActivityTab.scss'
+import ReactQuill from 'react-quill';
 import { images } from '../../config/images'
-import { Menu, Dropdown, List, Avatar } from 'antd';
+import * as actions from '../../appRedux/actions';
 import DownArrowIcon from './../icons/DownArrowIcon'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Menu, Dropdown, Form,Button,message } from 'antd';
 
 const menu = (
 	<Menu>
@@ -30,8 +32,24 @@ const data = [
 	},
 ];
 
-class ActivityTab extends React.Component {
-	render() {
+const ActivityTab =(props)=> {
+	const dispatch = useDispatch();
+	const users = useSelector(state => state.app.users || []);
+	const [comment, setComment] = useState('');
+	const [userDetails, setUserDetails] = useState('');
+	const onFinish = (values) => {
+		dispatch(actions.createComment(comment,props?.taskDetails?.id))
+		.then(() => {
+		  message.success('Comment added successfully');
+		  props.updateTask()
+		  setComment('')
+		//   onClose();
+		})
+		.catch((err) => {
+		  message.error(err.response.data.errors);
+		});
+	};
+	// render() {
 		return (
 			<div className="activity-wrap">
 				<Dropdown overlay={menu} trigger={['click']}>
@@ -40,61 +58,39 @@ class ActivityTab extends React.Component {
 					</a>
 				</Dropdown>
 				<ul className="list-wrap">
-					<li className="list">
+					{props?.taskDetails?.comments?.map((cmnt)=>{
+						return <li className="list">
 						<div className="avtar-list">
 							<img src={images.Listavtar} />
 						</div>
 						<div className="list-content">
-							<h3>Jessica Lopez</h3>
-							<div className="description">
-								<p>This makes sense for me. What do you think? <a href="">@jordyalba</a></p>
-								<span className="date">9:45 AM Today</span>
+							<h3>{cmnt.user_name}</h3>
+							<div className="description" dangerouslySetInnerHTML={{__html: cmnt.comment}}>
 							</div>
 						</div>
 					</li>
-					<li className="list">
-						<div className="avtar-list">
-							<img src={images.Listavtar} />
-						</div>
-						<div className="list-content">
-							<h3>Jessica Lopez</h3>
-							<div className="description highlitedText">
-								<span className="highlight">Highlighted text:</span>
-								<div className="desc-text">under the policies and procedures devel...</div>
-								<span className="date">9:45 AM Today</span>
-							</div>
-						</div>
-					</li>
-					<li className="list">
-						<div className="avtar-list">
-							<img src={images.Listavtar} />
-						</div>
-						<div className="list-content">
-							<h3>Jessica Lopez</h3>
-							<div className="description">
-								<p>Quite a discussion 😆. Glad it help figuring this stuff out.</p>
-								<span className="date">9:45 AM Today</span>
-							</div>
-						</div>
-					</li>
-					<li className="list">
-						<div className="avtar-list">
-							<img src={images.Listavtar} />
-						</div>
-						<div className="list-content">
-							<h3>James King</h3>
-							<div className="description">
-								<p>This is a little out of scope</p>
-								<span className="date">9:45 AM Today</span>
-							</div>
-						</div>
-					</li>
+					})}
+					{(!props?.taskDetails?.comments||props?.taskDetails?.comments.length===0)&&<li className="list" style={{justifyContent:'center'}}>
+						No Chat initiated
+					</li>}
 				</ul>
-				<span className="conv-text">Start of conversations</span>
+				<div className="task-form-wrap">
+					<Form
+					name="basic"
+					labelCol={{ span: 8 }}
+					wrapperCol={{ span: 16 }}
+					onFinish={onFinish}
+					>
+					<ReactQuill theme="snow" value={comment} onChange={setComment} />
+					<div className="ButtonRight" style={{float:'right',marginTop:'10px'}}>
+						<Button type="primary" htmlType="submit">Comment</Button>
+					</div>
+					</Form>
+				</div>
 			</div>
 			
 		);
-	}
+	// }
 }
 
 export default ActivityTab

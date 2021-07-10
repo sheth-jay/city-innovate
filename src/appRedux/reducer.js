@@ -130,6 +130,34 @@ export default (state = INITIAL_STATE, action) => {
         getTaskListSource: null,
         getTaskListError: action.payload.response.data.errors,
       };
+    case actionTypes.FILTER_TASK_LIST_LOADING:
+      return {
+        ...state,
+        filterTaskListRequestState: RequestStates.loading,
+        filterTaskListSource: action.meta && action.meta.source,
+        filterTaskListError: null,
+      };
+    case actionTypes.FILTER_TASK_LIST_SUCCESS:
+      return {
+        ...state,
+        filterTaskListRequestState: RequestStates.success,
+        filterTaskListSource: null,
+        filterTaskListError: null,
+        taskList: [
+          ...action.payload.data.data,
+        ],
+        taskListMetadata: {
+          ...state.taskListMetadata,
+          ...action.payload.data.meta_key,
+        }
+      };
+    case actionTypes.FILTER_TASK_LIST_ERROR:
+      return {
+        ...state,
+        filterTaskListRequestState: RequestStates.error,
+        filterTaskListSource: null,
+        filterTaskListError: action.payload.response.data.errors,
+      };
       case actionTypes.GET_CURRENT_TASK_DETAILS_LOADING:
       return {
         ...state,
