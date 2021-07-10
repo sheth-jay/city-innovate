@@ -65,16 +65,6 @@ const Login = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Link className="login-form-forgot" to="/forgot-password">
-            Forgot password
-          </Link>
-        </Form.Item>
-
-        <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button">
             Login
           </Button>

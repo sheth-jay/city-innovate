@@ -46,6 +46,7 @@ const CreateTask = ({ visible, onClose }) => {
     .then(() => {
       message.success('you have successfully created a new task');
       form.resetFields();
+      dispatch(actions.getTaskList(1));
       onClose();
     })
     .catch((err) => {

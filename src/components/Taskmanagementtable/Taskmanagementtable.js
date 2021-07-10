@@ -24,8 +24,8 @@ const columns = [
 		title: 'Task name',
 		dataIndex: 'taskname',
 		key: 'taskname',
-		sorter: (a, b) => a.taskname.length - b.taskname.length,
-		sortDirections: ['descend'],
+		// sorter: (a, b) => a.taskname.length - b.taskname.length,
+		// sortDirections: ['descend'],
 	},
 	{
 		title: 'Document',
