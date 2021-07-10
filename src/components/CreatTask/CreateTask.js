@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useHistory } from 'react-router-dom';
@@ -11,23 +10,23 @@ import { Button, Input, Drawer, Form, Upload, Select, DatePicker, Space, message
 import * as actions from '../../appRedux/actions';
 import RequestState from '../../utils/request-states';
 
-const props = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+// const props = {
+//   name: 'file',
+//   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+//   headers: {
+//     authorization: 'authorization-text',
+//   },
+//   onChange(info) {
+//     if (info.file.status !== 'uploading') {
+//       console.log(info.file, info.fileList);
+//     }
+//     if (info.file.status === 'done') {
+//       message.success(`${info.file.name} file uploaded successfully`);
+//     } else if (info.file.status === 'error') {
+//       message.error(`${info.file.name} file upload failed.`);
+//     }
+//   },
+// };
 
 const CreateTask = ({ visible, onClose }) => {
   const [descriptionValue, setDescriptionValue] = useState('');
@@ -99,7 +98,7 @@ const CreateTask = ({ visible, onClose }) => {
             name="document"
             rules={[{ required: true, message: 'Please upload Document!' }]}
           >
-            <Upload {...props} accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <Upload accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>

@@ -39,19 +39,22 @@ export const getCurrentTaskDetails = (taskId) => ({
   payload: api.get(`/tasks/${taskId}`),
 });
 
-export const createTask = (values) => ({
+export const createTask = (values) => {
+  const formData = new FormData();
+  formData.append('file', values.document.fileList[0].originFileObj);
+  return {
   type: actionTypes.CREATE_TASK,
   payload: api.post('/tasks', {
     task: {
       title: values.title,
       description: values.description,
       label_ids: values.labels,
-      document: values.document,
+      document: formData,
       user_ids: values.assigned_to,
       due_date: values.due_date,
     }
   }),
-});
+}};
 
 export const getTaskLabels = () => ({
   type: actionTypes.GET_TASK_LABELS,

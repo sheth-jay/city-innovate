@@ -14,7 +14,8 @@ const Taskmanagementtablecontainer = () => {
   const currentTaskDetails = useSelector(state => state.app.currentTaskDetails);
   const loading = useSelector(state => state.app.getCurrentTaskDetailsRequestState === RequestStates.loading
     || state.app.getTaskListRequestState === RequestStates.loading);
-
+    
+  console.log('>>taskList', taskList);
   useEffect(() => {
     if (taskListMetadata.total_pages > taskListMetadata.current_page) {
       setGetNextPageData(true);

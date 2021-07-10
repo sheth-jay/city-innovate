@@ -26,11 +26,6 @@ const columns = [
 		sorter: (a, b) => a.document - b.document,
 	},
 	{
-		title: 'Section',
-		dataIndex: 'section',
-		sorter: (a, b) => a.section - b.section,
-	},
-{
 		title: 'Labels',
 		dataIndex: 'labels',
 		sorter: (a, b) => a.labels - b.labels,
@@ -59,14 +54,11 @@ const data = (taskList, showDrawer) => {
 				</div>
 			),
 			document: task.document,
-			section: (
-				<Tag>task.section</Tag>
-			),
 			labels: (
 				<div className="TagLabels">
 					{
 						task.labels && task.labels.map(label => {
-							return (<Tag key={label}>{label}</Tag>)
+							return (<Tag key={label.id}>{label.name}</Tag>)
 						})
 					}
 				</div>

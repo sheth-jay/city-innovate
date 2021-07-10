@@ -90,8 +90,14 @@ const OverviewTab = ({ currentTaskDetails }) => {
         <span>Assignee</span>
         <div className="info-data">
           <div className="assignee-info">
-            <img src={images.assignee1}/>
-            <span>Jessica Lopez</span>
+            {currentTaskDetails.assignees.map((assignee) => {
+              return (
+                <>
+                  <img src={assignee.avatar} alt={assignee.avatar}/>
+                  <span>{assignee.full_name}</span>
+                </>
+              )
+            })}
           </div>
           <div className="assignee-info">
             <div className="delete-opt">
