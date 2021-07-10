@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from 'antd/lib/avatar/avatar';
 import { CloseCircleFilled } from '@ant-design/icons';
-import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown, Spin } from 'antd';
+import { Button, Drawer, Table, Tag, Checkbox, Breadcrumb, Tabs, Menu, Dropdown, Spin, Pagination } from 'antd';
 
 import './Taskmanagementtable.scss';
 import AddIcon from '../icons/AddIcon';
@@ -37,7 +37,7 @@ const columns = [
 		dataIndex: 'section',
 		// sorter: (a, b) => a.section.length - b.section.length,
 	},
-{
+  {
 		title: 'Labels',
 		dataIndex: 'labels',
 		// sorter: (a, b) => a.labels.length - b.labels.length,
@@ -70,14 +70,11 @@ const data = (taskList, showDrawer) => {
 				</div>
 			),
 			document: task.document,
-			section: (
-				<Tag>task.section</Tag>
-			),
 			labels: (
 				<div className="TagLabels">
 					{
 						task.labels && task.labels.map(label => {
-							return (<Tag key={label}>{label}</Tag>)
+							return (<Tag key={label.id}>{label.name}</Tag>)
 						})
 					}
 				</div>
@@ -152,12 +149,17 @@ class Taskmanagementtable extends React.Component {
 			selectedRowKeys,
 			onChange: this.onSelectChange,
 		};
-		
+		const {total_count,current_page} = this.props.taskListMetadata;
+
 		return (
 			<div className="TaskmanagementtableStyles">
+
 				<div className="dataTable-wrap">
 					<Spin spinning={this.props.loading}>
-						<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} />
+						<Table rowSelection={rowSelection} columns={columns} dataSource={data(this.props.taskList, this.showDrawer)} onChange={dataTableChange} pagination={false}/>
+            <div style={{ float: 'right', marginTop: '20px'}}>
+              <Pagination defaultCurrent={1} total={total_count} current={current_page} onChange={this.props.changePage}/> 
+            </div>
 					</Spin>
 					<div className="selected-task-popover">
 						<span>2 tasks selected</span>
@@ -171,6 +173,7 @@ class Taskmanagementtable extends React.Component {
 						</div>
 					</div>
 				</div>
+
 				<Drawer
 					placement="right"
 					closable={false}
